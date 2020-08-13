@@ -1,0 +1,204 @@
+{% extends "basic_app/patient_base.html" %}
+{% load crispy_forms_tags %}
+<!-- {% block extra_css %}
+    <style>
+    	.table td{
+    		border: 0.5px solid #dde2e6;
+    	}
+    </style>
+{% endblock extra_css %} -->
+{% block patient_content %}
+<button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#addPreviousReport">
+  Add More
+</button>
+<div class="table-responsive-sm">
+	<table class="table table-bordered">
+    <thead>
+		<tr>
+			<th>HB</th>
+      <th>Platelet</th>
+      <th>BT</th>
+      <th>CT</th>
+      <th>BS-F</th>
+      <th>BS-PP</th>
+      <th>UR/M</th>
+      <th>S.TSH</th>
+      <th>USG</th>
+      <th>MRI/CT-Scan</th>
+      <th>ECG</th>
+			<th>Chest x-ray</th>
+      <th>Blood Group</th>
+      <th>HCV</th>
+      <th>Hbs Ag</th>
+      <th>HIV</th>
+      <th>VDRL</th>
+			<th>Created On</th>
+		</tr>
+    </thead>
+	{% for r in reports %}
+  <tbody>
+		<tr>
+			<td>{{r.hb}}
+      <br>on {{r.hb_date}}</td>
+			<td>{{r.platelet}}</td>
+      <td>{{r.bt}}</td>
+      <td>{{r.ct}}</td>
+      <td>{{r.bs_f}}</td>
+      <td>{{r.bs_pp}}</td>
+      <td>{{r.ur_m}}</td>
+      <td>{{r.s_tsh}}</td>
+      <td>{{r.usg}}</td>
+      <td>{{r.mri_ct_scan}}</td>
+      <td>{{r.ecg}}</td>
+      <td>{{r.chest_x_ray}}</td>
+      <td>{{r.blood_group}}</td>
+      <td>{{r.hcv}}</td>
+      <td>{{r.hbs_ag}}</td>
+      <td>{{r.hiv}}</td>
+      <td>{{r.vdrl}}</td>
+			<td><small>{{r.created_at}}</small></td>
+		</tr>
+    </tbody>
+	{% empty %}
+		<!-- <tr style="width:auto"> -->
+			<h5>No Previous Reports</h5>
+		<!-- </tr> -->
+	{% endfor %}
+	</table>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="addPreviousReport">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Previous Report</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- <span>&nbsp;</span> -->
+
+        <div class="container">
+          <div class="row">
+            {% for field in form  %}
+              <div class="col-sm-6">
+                <b>{{ field.label_tag }}</b>  {{ field }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+    	<form method="POST">
+    		{% csrf_token %}
+    		<button class="btn btn-primary" type="submit">Submit</button>
+   		</form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_javascript %}
+<head>
+<!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+ <!-- Fengyuan Chen's Datepicker -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<script>
+
+  $( function() {
+    $( "#id_hb_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_platelet_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_bt_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_ct_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_bs_f_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_bs_pp_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_ur_m_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_s_tsh_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_usg_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_mri_ct_scan_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_ecg_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_chest_x_ray_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_blood_group_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_hcv_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_hbs_ag_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_hiv_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+    $( "#id_vdrl_date" ).datepicker({
+      autoHide: true,
+      zIndex: 2048,
+      format: 'YYYY-MM-DD',
+    });
+  } );
+  </script>
+  <div class="datepicker-container datepicker-dropdown datepicker-top-left datepicker-hide" style="z-index: 2048; top: 155.6px; left: 115.4px;"><div class="datepicker-panel datepicker-hide" data-view="years picker"><ul><li data-view="years prev">‹</li><li data-view="years current"></li><li data-view="years next">›</li></ul><ul data-view="years"></ul></div><div class="datepicker-panel datepicker-hide" data-view="months picker"><ul><li data-view="year prev">‹</li><li data-view="year current"></li><li data-view="year next">›</li></ul><ul data-view="months"></ul></div><div class="datepicker-panel" data-view="days picker"><ul><li data-view="month prev">‹</li><li data-view="month current">August 2020</li><li data-view="month next">›</li></ul><ul data-view="week"><li class="" data-view="">Su</li><li class="" data-view="">Mo</li><li class="" data-view="">Tu</li><li class="" data-view="">We</li><li class="" data-view="">Th</li><li class="" data-view="">Fr</li><li class="" data-view="">Sa</li></ul><ul data-view="days"><li class="muted" data-view="day prev">26</li><li class="muted" data-view="day prev">27</li><li class="muted" data-view="day prev">28</li><li class="muted" data-view="day prev">29</li><li class="muted" data-view="day prev">30</li><li class="muted" data-view="day prev">31</li><li class="" data-view="day">1</li><li class="" data-view="day">2</li><li class="" data-view="day">3</li><li class="" data-view="day">4</li><li class="" data-view="day">5</li><li class="" data-view="day">6</li><li class="" data-view="day">7</li><li class="" data-view="day">8</li><li class="" data-view="day">9</li><li class="" data-view="day">10</li><li class="" data-view="day">11</li><li class="picked" data-view="day picked">12</li><li class="highlighted" data-view="day">13</li><li class="" data-view="day">14</li><li class="" data-view="day">15</li><li class="" data-view="day">16</li><li class="" data-view="day">17</li><li class="" data-view="day">18</li><li class="" data-view="day">19</li><li class="" data-view="day">20</li><li class="" data-view="day">21</li><li class="" data-view="day">22</li><li class="" data-view="day">23</li><li class="" data-view="day">24</li><li class="" data-view="day">25</li><li class="" data-view="day">26</li><li class="" data-view="day">27</li><li class="" data-view="day">28</li><li class="" data-view="day">29</li><li class="" data-view="day">30</li><li class="" data-view="day">31</li><li class="muted" data-view="day next">1</li><li class="muted" data-view="day next">2</li><li class="muted" data-view="day next">3</li><li class="muted" data-view="day next">4</li><li class="muted" data-view="day next">5</li></ul></div></div>
+  </body>
+{% endblock extra_javascript %}

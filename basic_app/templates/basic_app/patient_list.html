@@ -1,0 +1,32 @@
+{% extends "basic_app/patient_base.html" %}
+
+{% block prepatient %}
+<div class="container">
+<span>&nbsp;</span>
+<h2>Patients List</h2>
+<div class="row text-center d-flex justify-content-center">
+    {% for patient in patients %}
+<div>
+<div class="col">
+<span>&nbsp;</span>	
+<div class="card" style="width: 15rem;">
+    <div class="card-header">
+    	<h3>Name: {{ patient.name }}</h3>
+    </div>
+	<div class="card-body">
+		<p>Mobile No.: {{patient.mobile}}</p>
+        <p>Age: {{patient.age}}</p>
+        <p>Address: {{patient.address}}</p>
+	</div>
+	<div class="card-footer">
+		<a href="{% url 'basic_app:detail' pk=patient.pk %}" class="btn btn-primary">View More</a>
+	</div>
+</div>
+</div>
+</div>
+{% empty %}
+    <h3>No Patients</h3>
+{% endfor %}
+</div>
+</div>
+{% endblock %}

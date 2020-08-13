@@ -1,0 +1,64 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+      .container{
+        font-family: monospace;
+        font-size: 150%;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+	<span>&nbsp;</span>
+    <h1>Doctor Details</h1>
+    <h4>Name: Dr. Taruna Singh</h4>
+    <h4>Designation: MBBS, DGO</h4>
+    <h4>Address: Varanasi</h4>
+    <h4>Mobile: +91 00000 00000</h4>
+    <h1>Patient Details</h1>
+    <pre><strong>
+Id: {{patient.patient_id}}
+Name: {{patient.name}}&nbsp;|&nbsp;Age: {{patient.age}}&nbsp;|&nbsp;Gender: {{patient.gender}}&nbsp;|&nbsp;Mobile No.: {{patient.mobile}}
+Address: {{patient.address}}</strong>
+    </pre>
+    <span>&nbsp;</span>
+    <h3>Diagnosisss: <h5>
+        {% for p in prescription.diagnosis.all %}
+        {{ p }}&#44;
+        {% endfor %}
+      </h5>
+    </h3>
+
+    <h3>Investigation: <h5>
+        {% for p in prescription.investigation.all %}
+        {{ p }}&#44;
+        {% endfor %}
+      </h5>
+    </h3>
+
+    <h3>Mediciens:</h3> {% for d in ddt %}
+    <ul><li>
+    <strong>Drug:</strong> {{ d.drug }}
+    <strong>Dosage:</strong> {{ d.dosage }}
+    <strong>Time:</strong> {{ d.time }}
+  </li>
+  </ul>
+    {% endfor %}
+
+    <h3>Precautions: <h5>
+        {% for p in prescription.precaution.all %}
+        {{ p }}&#44;
+        {% endfor %}
+      </h5>
+    </h3>
+
+  <h3>Follow Up:</h3> {{ prescription.follow_up }}
+  <h3>Comment:</h3> {{ prescription.comment }}
+
+  </div>
+</body>
+</html>

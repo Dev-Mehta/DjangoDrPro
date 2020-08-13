@@ -1,0 +1,11 @@
+{% extends "basic_app/patient_base.html" %}
+{% block postpatient %}
+	<br/>
+    {% for p in object_list %}
+        <p>
+        		<a href="{% url 'basic_app:prescription_detail' pk=p.patient_id ppk=p.prescription_id%}">
+        			Patient: {{p.patient}} | Date: {{p.created_at.date}}
+        		</a>
+        </p>
+	{% endfor %}
+{% endblock postpatient %}

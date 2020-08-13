@@ -1,0 +1,139 @@
+{% extends "basic_app/patient_base.html" %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<style type="text/css">
+  .addMoreBtn{
+    padding: 2px 10px;
+    background: var(--dark);
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.3s;
+    margin-bottom: 1rem;
+  }
+  .addMoreBtn:hover{
+    background: #fff;
+    color: var(--dark);
+    outline: 1px solid black;
+    border-radius: 5px;
+  }
+</style>
+{% endblock extra_css %}
+{% block postpatient %}
+	<span>&nbsp;</span>
+    <form class="form-group">
+    	{{ddt_form_dis|crispy}}
+    </form>
+    <button type="button"  class="addMoreBtn" data-toggle="modal" data-target="#addMore">Add More</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addMore" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Drugs</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form class="form-group">
+            {{ddt_form_dis|crispy}}
+          </form>
+          <button id="btn-ddt-dis-submit" class="btn btn-primary">Add More</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+    <form class="form-group" method="POST">
+    	{{form_dis|crispy}}
+    	{% csrf_token %}
+    </form>
+    <button id="submit-btn" class="btn btn-primary">Create Discharge Summary</button>
+{% endblock postpatient %}
+{% block extra_javascript %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#id_precaution').select2();
+  });
+  var btn = document.querySelector('#submit-btn');
+  var addMoreBtnDis = document.querySelector('#btn-ddt-dis-submit')
+  var old_drug = ''
+  var old_dosage = ''
+  var old_time = ''
+  btn.onclick = function(){
+  	btn.innerText = "Processing..."
+    var husband_name = document.querySelector('#id_husband_name');
+    var diagnosis = document.querySelector('#id_diagnosis');
+    var procedure = document.querySelector('#id_procedure');
+    var per_op = document.querySelector('#id_per_op');
+    var baby_details = document.querySelector('#id_baby_details');
+    var hospital_stay = document.querySelector('#id_hospital_stay');
+    var advice_on_discharge = document.querySelector('#id_advice_on_discharge');
+
+  	var drug = document.querySelector('#id_drug');
+  	drug = drug.selectedOptions[0].innerText;
+  	var dosage = document.querySelector('#id_dosage');
+  	dosage = dosage.selectedOptions[0].innerText;
+  	var time = document.querySelector('#id_time');
+  	time = time.selectedOptions[0].innerText
+    var precaution = document.querySelector('#id_precaution');
+  	var follow_up = document.querySelector('#id_follow_up');
+    var comment = document.querySelector('#id_comment');
+  	// if(diag.selectedOptions.length === 0){
+  	// 	alert("Select fill Diagnosis");
+  	// 	return;
+  	// }
+  	// else{
+      var precaut = ''
+      for(let i=0;i<precaution.selectedOptions.length;i++){
+        var opt = precaution.selectedOptions[i].innerText;
+        precaut = precaut + opt + '<opt>'
+      }
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+  	     window.location.href='/patient/{{patient.patient_id}}'
+	   }
+	  	};
+	  	xhttp.open("POST", "/patient/{{patient.patient_id}}/create_discharge_summary/", true);
+	  	xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	  	xhttp.send(`drug=${drug}&dosage=${dosage}&time=${time}&husband_name=${husband_name.value}&diagnosis=${diagnosis.value}&procedure=${procedure.value}
+                  &per_op=${per_op.value}&baby_details=${baby_details.value}&hospital_stay=${hospital_stay.value}&advice_on_discharge=${advice_on_discharge.value}
+                  &precaution=${precaut}&follow_up=${follow_up.value}&comment=${comment.value}`);
+  	// }
+}
+addMoreBtnDis.onclick = function(){
+  var drug = document.querySelectorAll('#id_drug')[1];
+  drug = drug.selectedOptions[0].innerText;
+  var dosage = document.querySelectorAll('#id_dosage')[1];
+  dosage = dosage.selectedOptions[0].innerText;
+  var time = document.querySelectorAll('#id_time')[1];
+  time = time.selectedOptions[0].innerText
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+         addMoreBtnDis.innerText = 'Processing...'
+         setTimeout(function(){
+            addMoreBtnDis.innerText = "Add More Drugs";
+         }, 1500)
+         old_drug = drug;
+         old_time = time;
+         old_dosage = dosage;
+     }
+      };
+      if(old_time === time && old_dosage === dosage && old_drug === drug){
+        alert("You added these values already");
+        old_time = ''
+        old_drug = ''
+        old_dosage = ''
+        return;
+      }
+      xhttp.open("POST", "/patient/{{patient.patient_id}}/add_ddt_dis/", true);
+      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhttp.send(`drug=${drug}&dosage=${dosage}&time=${time}`);
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+{% endblock extra_javascript %}

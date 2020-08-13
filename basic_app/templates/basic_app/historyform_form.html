@@ -1,0 +1,27 @@
+{% extends "basic_app/patient_base.html" %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock extra_css %}
+{% block postpatient %}
+<h1>
+  {{text}}
+</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class='btn btn-primary' value="Save">
+  </form>
+  {% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#id_chief_complaints').select2();
+    $('#id_past_history').select2();
+    $('#id_treatment_history').select2();
+    $('#id_menstrual').select2();
+    $('#id_obsteric_histroy').select2();
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+{% endblock extra_javascript %}

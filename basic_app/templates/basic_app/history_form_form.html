@@ -1,0 +1,16 @@
+{% extends "basic_app/patient_base.html" %}
+
+{% block postpatient %}
+<h1>
+  {% if not form.instance.pk %}
+  Patient History Form
+  {% else %}
+  Update Patient History Form
+  {% endif %}
+</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class='btn btn-primary' value="Save">
+  </form>
+{% endblock %}

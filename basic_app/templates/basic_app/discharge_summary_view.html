@@ -1,0 +1,64 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+      .container{
+        font-family: Georgia, serif;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+	<span>&nbsp;</span>
+    <h1>SAUBHAGYA HOSPITAL</h1>
+    <h4>Name: Dr. Taruna Singh</h4>
+    <h4>Designation: MBBS, DGO</h4>
+    <h4>Address: Varanasi</h4>
+    <h4>Mobile: +91 00000 00000</h4>
+    <h3>DISCHARGE SUMMARY</h1>
+    <pre><strong>
+Id: {{patient.patient_id}}
+Name: {{patient.name}}&nbsp;|&nbsp;Age: {{patient.age}}&nbsp;|&nbsp;Gender: {{patient.gender}}
+Husband Name: {{discharge.husband_name}}
+Address: {{patient.address}}
+Mobile No.: {{patient.mobile}}
+</strong>
+    </pre>
+    <span>&nbsp;</span>
+    <strong>Diagnosis: </strong> {{discharge.diagnosis}}
+    <br>
+    <br><strong>Procedure: </strong> {{discharge.procedure}}
+    <br>
+    <br><strong>Per Op: </strong> {{discharge.per_op}}
+    <br>
+    <br><strong>Baby Details: </strong> {{discharge.baby_details}}
+    <br>
+    <br><strong>Hospital Stay: </strong> {{discharge.hospital_stay}}
+    <br>
+    <br><strong>Advice On Discharge: </strong> {{discharge.advice_on_discharge}}
+
+    <h3>Mediciens:</h3> {% for d in ddt %}
+    <ul><li>
+    <strong>Drug:</strong> {{ d.drug }}
+    <strong>Dosage:</strong> {{ d.dosage }}
+    <strong>Time:</strong> {{ d.time }}
+  </li>
+  </ul>
+    {% endfor %}
+
+    <h3>Precautions: <h5>
+        {% for p in discharge.precaution.all %}
+        {{ p }}&#44;
+        {% endfor %}
+      </h5>
+    </h3>
+
+  <h3>Follow Up:</h3> {{ discharge.follow_up }}
+  <h3>Comment:</h3> {{ discharge.comment }}
+
+  </div>
+</body>
+</html>

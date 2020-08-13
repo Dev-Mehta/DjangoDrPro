@@ -1,0 +1,406 @@
+{% extends "basic_app/patient_base.html" %}
+{% load crispy_forms_tags %}
+{% block postpatient %}
+  <!-- <span>&nbsp;</span> -->
+  <div class="jumbotron">
+    <h2>Patient Details:</h2>
+    <pre><strong>
+  Id: {{patient_details.patient_id}}
+  Name: {{patient_details.name}}
+  Mobile No.: {{patient_details.mobile}}
+  Age: {{patient_details.age}}
+  Gender: {{patient_details.gender}}
+  Address: {{patient_details.address}}</strong>
+    </pre>
+    <h3>History Form:</h3>
+        <strong>Chief Complaints: </strong>
+        {% for chief in patient_history.chief_complaints.all %}
+        {{chief}}&#44;
+        {% endfor %}
+        <br><strong>Past History: </strong>
+        {% for ph in patient_history.past_history.all %}
+        {{ph}}&#44;
+        {% endfor %}
+        <br><strong>Treatment History: </strong>
+        {% for th in patient_history.treatment_history.all %}
+        {{th}}&#44;
+        {% endfor %}
+        <br><strong>Menstrual: </strong>
+        {% for mens in patient_history.menstrual.all %}
+        {{mens}}&#44;
+        {% endfor %}
+        <br><strong>Obsteric Histroy: </strong>
+        {% for obs in patient_history.obsteric_histroy.all %}
+         {{obs}}&#44;
+        {% endfor %}
+      <br><strong>G: </strong> {{patient_history.g}}
+      <br><strong>P: </strong> {{patient_history.p}}
+      <br><strong>A: </strong> {{patient_history.a}}
+      <br><strong>L: </strong>  {{patient_history.l}}
+
+      {% ifequal patient_history_exist "true" %}
+      <p>
+        <a class='btn btn-dark' href="/patient/{{ patient_details.patient_id}}/update_history/">Update History</a>
+      </p>
+      {% else %}
+      <p>
+        <a class='btn btn-dark' href="/patient/{{ patient_details.patient_id}}/create_history/">Fill History Form</a>
+      </p>
+      {% endifequal %}
+
+<!-- Previous Report Section -->
+    </br>
+    <h3>Previous Reports:</h3>
+    <div class="table-responsive-sm">
+    	<table class="table table-bordered">
+        <thead>
+    		<tr>
+    			<th>HB</th>
+          <th>Platelet</th>
+          <th>BT</th>
+          <th>CT</th>
+          <th>BS-F</th>
+          <th>BS-PP</th>
+          <th>UR/M</th>
+          <th>S.TSH</th>
+          <th>USG</th>
+          <th>MRI/CT-Scan</th>
+          <th>ECG</th>
+    			<th>Chest x-ray</th>
+          <th>Blood Group</th>
+          <th>HCV</th>
+          <th>Hbs Ag</th>
+          <th>HIV</th>
+          <th>VDRL</th>
+    			<th>Created On</th>
+    		</tr>
+        </thead>
+    	{% for r in previous_reports %}
+      <tbody>
+    		<tr>
+    			<td>{{r.hb}}</td>
+    			<td>{{r.platelet}}</td>
+          <td>{{r.bt}}</td>
+          <td>{{r.ct}}</td>
+          <td>{{r.bs_f}}</td>
+          <td>{{r.bs_pp}}</td>
+          <td>{{r.ur_m}}</td>
+          <td>{{r.s_tsh}}</td>
+          <td>{{r.usg}}</td>
+          <td>{{r.mri_ct_scan}}</td>
+          <td>{{r.ecg}}</td>
+          <td>{{r.chest_x_ray}}</td>
+          <td>{{r.blood_group}}</td>
+          <td>{{r.hcv}}</td>
+          <td>{{r.hbs_ag}}</td>
+          <td>{{r.hiv}}</td>
+          <td>{{r.vdrl}}</td>
+    			<td><small>{{r.created_at}}</small></td>
+    		</tr>
+        </tbody>
+    	{% empty %}
+      <!-- <tr style="width:auto"> -->
+        <h6>No Previous Reports</h6>
+      <!-- </tr> -->
+    	{% endfor %}
+    	</table>
+    </div>
+
+      <a href="/patient/{{patient_details.patient_id}}/previous_reports/" class="btn btn-outline-dark">Show All</a>
+      &nbsp;
+      <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addPreviousReport">
+      Add Previous Report
+      </button>
+      <br />
+      <br />
+      <br />
+
+
+      <h3>Tetanus Immunisation</h3>
+      <strong>TT1 Date: </strong>{{tetanus_immunisation.date_tt1}}
+      <br><strong>TT2 Date: </strong>{{tetanus_immunisation.date_tt2}}
+          {% ifequal tit_exist "true"%}
+          <p>
+            <a class='btn btn-dark' href="/patient/{{ patient_details.patient_id}}/update_tetanus_immunisation/">Update Tetanus </a>
+            </p>
+          {% else %}
+          <p>
+            <a class='btn btn-dark' href="/patient/{{ patient_details.patient_id}}/create_tetanus_immunisation/">Tetanus Immunisation</a>
+            </p>
+          {% endifequal %}
+
+<!-- Physical Examination -->
+    </br>
+      </br>
+      <h3>Physical Examination:</h3>
+      <div class="table-responsive-sm">
+      	<table class="table table-bordered">
+          <thead>
+      		<tr>
+    			<th>PR</th>
+          <th>BP</th>
+          <th>Wt.</th>
+          <th>Ht.</th>
+          <th>Uterus Funal Ht.</th>
+          <th>Presentation</th>
+          <th>FMS</th>
+          <th>Per Vaginum</th>
+    			<th>Created On</th>
+        </tr>
+        </thead>
+    	{% for r in physical_examination %}
+      <tbody>
+        <tr>
+    			<td>{{r.pr}}</td>
+    			<td>{{r.bp}}</td>
+          <td>{{r.wt}}</td>
+          <td>{{r.ht}}</td>
+          <td>{{r.uterus_funal_ht}}</td>
+          <td>{{r.presentation}}</td>
+          <td>{{r.fms}}</td>
+          <td>{{r.per_vaginum}}</td>
+    			<td><small>{{r.created_at}}</small></td>
+        </tr>
+        </tbody>
+        {% empty %}
+        <!-- <tr style="width:auto"> -->
+          <h6>No Physical Examination</h6>
+        <!-- </tr> -->
+      	{% endfor %}
+      </table>
+                  <!-- {% for pr in previous_reports %}
+                        <p style="margin-bottom: 0.2rem;">
+                        <strong>HB:</strong> {{pr.hb}} |
+                        <strong>BT:</strong> {{pr.bt}} |
+                        <strong>Created At:</strong> {{pr.created_at}}
+                        </p>
+                        {% endfor %} -->
+        <a href="/patient/{{patient_details.patient_id}}/physical_examination/" class="btn btn-outline-dark">Show All</a>
+        &nbsp;
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addPhysicalExamination">
+        Add Physical Examination
+        </button>
+        <br />
+        <br />
+
+<!-- Prescription Form Section -->
+      <h3>Prescription: <h6>(Latest prescription)</h6></h3>
+
+      {% if prescription %}
+          <strong>Diagnosis: </strong>
+          {% for p in prescription.diagnosis.all %}
+          {{ p }}&#44;
+          {% endfor %}
+
+          <br><strong>Investigation: </strong>
+          {% for invest in prescription.investigation.all %}
+          {{ invest }}
+          {% endfor %}
+          <span>&nbsp;</span>
+          <br><strong>Medicines: </strong>
+          <ol>
+          {% for d in ddt %}
+
+            <li>
+              <strong>Drug:</strong> {{ d.drug }}
+              <br/><strong>Dosage:</strong> {{ d.dosage }}
+              <br/><strong>Time:</strong> {{ d.time }}
+          </li>
+
+          {% endfor %}
+          </ol>
+          <strong>Precautions: </strong>
+          {% for prec in prescription.precaution.all %}
+          {{ prec }}
+          {% endfor %}
+          <br><strong>Follow Up:</strong> {{ prescription.follow_up}}
+          <br><strong>Comment:</strong> {{ prescription.comment}}
+
+      {% endif %}
+      <p class="mt-3">
+        <a class="btn btn-outline-dark btn-block" href="/patient/{{patient_details.patient_id}}/view_prescriptions/">
+          View All Prescriptions
+        </a>
+      </p>
+      <p class="mt-3">
+        <a class="btn btn-danger btn-block" href="/patient/{{patient_details.patient_id}}/create_prescription/">
+        Create Prescription
+        </a>
+      </p>
+      {% ifequal downloadable "true" %}
+      <p class="mt-3">
+        <a class="btn btn-info btn-block" href="/patient/{{patient_details.patient_id}}/view_prescription/?download=false">
+        Download Prescription
+        </a>
+      </p>
+      {% endifequal %}
+
+
+
+      <h3>Discharge Summary: <small>(Latest discharge summary)</small></h3>
+
+      {% if discharge %}
+      <strong>Procedure: </strong> {{ discharge.husband_name }}
+      <br><strong>Diagnosis: </strong> {{ discharge.diagnosis }}
+      <br><strong>Procedure: </strong> {{ discharge.procedure }}
+      <br><strong>Per Op: </strong> {{ discharge.per_op }}
+      <br><strong>Baby Details: </strong> {{ discharge.baby_details }}
+      <br><strong>Hospital Stay: </strong> {{ discharge.hospital_stay }}
+      <br><strong>Advice On Discharge: </strong> {{ discharge.advice_on_discharge }}
+
+      <h3>Mediciens:</h3> {% for d_dis in ddt_dis %}
+      <ul><li>
+      <strong>Drug:</strong> {{ d_dis.drug }}
+      <strong>Dosage:</strong> {{ d_dis.dosage }}
+      <strong>Time:</strong> {{ d_dis.time }}
+    </li>
+    </ul>
+      {% endfor %}
+
+      <br><strong>Precautions: </strong>
+          {% for p in discharge.precaution.all %}
+          {{ p }}&#44;
+          {% endfor %}
+
+    <br><strong>Follow Up: </strong> {{ discharge.follow_up }}
+    <br><strong>Comment: </strong> {{ discharge.comment }}
+
+
+      {% endif %}
+
+      <p class="mt-3">
+        <a class="btn btn-danger btn-block" href="/patient/{{patient_details.patient_id}}/create_discharge_summary/">
+        Create Discharge Summary
+        </a>
+      </p>
+      {% ifequal dischdownload "true" %}
+      <p>
+      <a class="btn btn-info btn-block" href="/patient/{{patient_details.patient_id}}/view_discharge_summary/">
+      Download Discharge Summary
+      </a>
+      </p>
+      {% endifequal %}
+
+
+      <div class="modal fade" id="addPreviousReport">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Add More</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <span>&nbsp;</span>
+            <form class="form-group" method="POST">
+              {{form|crispy}}
+              {% csrf_token %}
+            </form>
+            <button id="form-submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="addPhysicalExamination">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Add More Physical</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <span>&nbsp;</span>
+            <form class="form-group" method="POST">
+              {{physical_form|crispy}}
+              {% csrf_token %}
+            </form>
+            <button id="form-submit-physical" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  </div>
+  {% endblock postpatient %}
+  {% block extra_javascript %}
+  <script type="text/javascript">
+    var btn = document.querySelector('#form-submit');
+    btn.onclick = function(){
+    var hb = document.querySelector('#id_hb');
+    var platelet = document.querySelector('#id_platelet');
+    var bt = document.querySelector('#id_bt');
+    var ct = document.querySelector('#id_ct');
+    var bs_f = document.querySelector('#id_bs_f');
+    var bs_pp = document.querySelector('#id_bs_pp');
+    var ur_m = document.querySelector('#id_ur_m');
+    var s_tsh = document.querySelector('#id_s_tsh');
+    var usg = document.querySelector('#id_usg');
+    var mri_ct_scan = document.querySelector('#id_mri_ct_scan');
+    var ecg = document.querySelector('#id_ecg');
+    var chest_x_ray = document.querySelector('#id_chest_x_ray');
+    var blood_group = document.querySelector('#id_blood_group');
+    var hcv = document.querySelector('#id_hcv');
+    var hbs_ag = document.querySelector('#id_hbs_ag');
+    var hiv = document.querySelector('#id_hiv');
+    var vdrl = document.querySelector('#id_vdrl');
+    // if(hb.value === ""){
+    //   alert("Fill HB Value");
+    // }
+    // else if(bt.value === ""){
+    //   alert("Fill BT Value");
+    // }
+    // else{
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          window.location.href="/patient/{{patient_details.patient_id}}"
+        }
+      };
+      xhttp.open("POST", "/patient/{{patient_details.patient_id}}", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send(`hb=${hb.value}&platelet=${platelet.value}&bt=${bt.value}&ct=${ct.value}&bs_f=${bs_f.value}&bs_pp=${bs_pp.value}
+      &ur_m=${ur_m.value}&s_tsh=${s_tsh.value}&usg=${usg.value}&mri_ct_scan=${mri_ct_scan.value}&ecg=${ecg.value}
+      &chest_x_ray=${chest_x_ray.value}&blood_group=${blood_group.value}&hcv=${hcv.value}&hbs_ag=${hbs_ag.value}&hiv=${hiv.value}&vdrl=${vdrl.value}`);
+  }
+
+
+  var btn_phy = document.querySelector('#form-submit-physical');
+  var btn_id = btn_phy.id
+  btn_phy.onclick = function(){
+  var pr = document.querySelector('#id_pr');
+  var bp = document.querySelector('#id_bp');
+  var wt = document.querySelector('#id_wt');
+  var ht = document.querySelector('#id_ht');
+  var uterus_funal_ht = document.querySelector('#id_uterus_funal_ht');
+  var presentation = document.querySelector('#id_presentation');
+  var fms = document.querySelector('#id_fms');
+  var per_vaginum = document.querySelector('#id_per_vaginum');
+
+  // if(hb.value === ""){
+  //   alert("Fill HB Value");
+  // }
+  // else if(bt.value === ""){
+  //   alert("Fill BT Value");
+  // }
+  // else{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        window.location.href="/patient/{{patient_details.patient_id}}"
+      }
+    };
+    xhttp.open("POST", "/patient/{{patient_details.patient_id}}", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(`pr=${pr.value}&bp=${bp.value}&wt=${wt.value}&ht=${ht.value}&uterus_funal_ht=${uterus_funal_ht.value}&presentation=${presentation.value}
+    &fms=${fms.value}&per_vaginum=${per_vaginum.value}&btn_id=${btn_id}`);
+  // }
+  }
+
+
+  </script>
+  {% endblock extra_javascript %}

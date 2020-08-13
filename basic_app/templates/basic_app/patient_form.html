@@ -1,0 +1,29 @@
+{% extends "basic_app/patient_base.html" %}
+{% load crispy_forms_tags %}
+{% block patient_content %}
+<span>&nbsp;</span>
+<h2>
+  Create Patient
+</h2>
+  {% if messages %}
+  	<span>&nbsp;</span>
+    <div class="messages">
+    {% for message in messages %}
+    {% ifequal message.tag error%}
+        <div class="alert alert-danger">
+        	<li>{{ message }}</li>
+        </div>
+    {% else %}
+        <div class="alert alert-{{message.tag}}">
+       		<li>{{ message }}</li>
+    	</div>
+    {% endifequal %}
+    {% endfor %}
+	</div>
+	{% endif %}
+  <form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class='btn btn-primary' value="Save">
+  </form>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "basic_app/patient_base.html" %}
+{% block postpatient %}
+
+    <style type="text/css">
+      .container{
+        font-family: monospace;
+      }
+    </style>
+<div class="container">
+	<span>&nbsp;</span>
+    <h1>Patient Details</h1>
+    <pre><strong>
+Id: {{patient.patient_id}}
+Name: {{patient.name}}&nbsp;|&nbsp;Age: {{patient.age}} Gender: {{patient.gender}}
+Mobile No.: {{patient.mobile}}
+Address: {{patient.address}}</strong>
+    </pre>
+    <h3>History Form:</h3>
+        <strong>Chief Complaints: </strong>
+        {% for chief in history.chief_complaints.all %}
+        {{chief}}&#44;
+        {% endfor %}
+        <br><strong>Past History: </strong>
+        {% for ph in history.past_history.all %}
+        {{ph}}&#44;
+        {% endfor %}
+        <br><strong>Treatment History: </strong>
+        {% for th in history.treatment_history.all %}
+        {{th}}&#44;
+        {% endfor %}
+        <br><strong>Menstrual: </strong>
+        {% for mens in history.menstrual.all %}
+        {{mens}}&#44;
+        {% endfor %}
+        <br><strong>Obsteric Histroy: </strong>
+        {% for obs in history.obsteric_histroy.all %}
+         {{obs}}&#44;
+        {% endfor %}
+      <h6>G: {{history.g}} P: {{history.p}} A: {{history.a}} L: {{history.l}}</h6>
+    <h3>Previous Reports:</h3>
+    <p>
+      {% for pr in previous_reports %}
+        <strong>HB:</strong> {{pr.hb}} | <strong>BT:</strong>{{pr.bt}} |<strong> Created At:</strong> {{pr.created_at}}
+    </br>
+      {% endfor %}
+   	</p>
+    <span>&nbsp;</span>
+
+    <h3>Prescription: </h3>
+        <strong>Diagnosis: </strong>
+        {% for p in prescription.diagnosis.all %}
+        {{ p }}&#44;
+        {% endfor %}
+
+        <br><strong>Investigation: </strong>
+        {% for invest in prescription.investigation.all %}
+        {{ invest }}
+        {% endfor %}
+        <span>&nbsp;</span>
+        <br><strong>Medicines: </strong>
+        {% for d in ddt %}
+        <ol>
+          <li>
+            <strong>Drug:</strong> {{ d.drug }}
+            <br/><strong>Dosage:</strong> {{ d.dosage }}
+            <br/><strong>Time:</strong> {{ d.time }}
+        </li>
+        </ol>
+        {% endfor %}
+        <strong>Precautions: </strong>
+        {% for prec in prescription.precaution.all %}
+        {{ prec }}
+        {% endfor %}
+        <br><strong>Follow Up:</strong> {{ prescription.follow_up}}
+        <br><strong>Comment:</strong> {{ prescription.comment}}
+
+  </div>
+{% endblock postpatient %}
