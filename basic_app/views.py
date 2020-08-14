@@ -4,21 +4,6 @@ from django.http import HttpResponse
 from django.views.generic import ListView,DetailView,UpdateView
 from .models import *
 from .forms import *
-# from .models import (Patient,
-#                     HistoryForm,
-#                     ChiefComplaint,
-#                     PreviousReport,
-#                     Prescription,
-#                     Diagnosis,
-#                     Drug,
-#                     Time,
-#                     Dosage,
-#                     DrugDosageTime)
-# from .forms import (PatientCreateForm,
-#                     HistoryCreateForm,
-#                     PreviousReportForm,
-#                     PrescriptionCreateForm,
-#                     DrugDosageTimeForm)
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from io import BytesIO
@@ -58,17 +43,12 @@ def PatientCreateView(request):
         form = PatientCreateForm()
         return render(request, "basic_app/patient_form.html", {"form":form})
     return HttpResponse("Hey")
-# class PatientListView(ListView):
-#     model = models.Patient
+
 
 def PatientListView(request):
-    patients = Patient.objects.all()
+    patients = Patient.objects.all().order_by('-created_at')
     return render(request, 'basic_app/patient_list.html', {"patients":patients})
 
-# class PatientDetailView(DetailView):
-#     context_object_name = 'patient_details'
-#     model = Patient
-#     template_name = 'basic_app/patient_detail.html'
 
 @csrf_exempt
 def PatientDetailView(request, pk):
@@ -186,9 +166,6 @@ def PreviousReportView(request, pk):
     if request.method == "POST":
         content = PreviousReport.objects.filter(patient=Patient.objects.get(patient_id=pk)).order_by('-created_at')
         form = PreviousReportForm(request.POST)
-        hb_date=request.POST.get('hb_date'),
-        print(hb_date)
-        return HttpResponse(hb_date)
         pr = PreviousReport(
             patient=Patient.objects.get(patient_id=pk),
             hb=request.POST.get('hb'),
@@ -398,7 +375,7 @@ def CreatePrescription(request,pk):
         follow_up = request.POST.get("follow_up")
         comment = request.POST.get("comment")
         prescription = Prescription(
-            prescription_id=len(Prescription.objects.all())+1,
+            # prescription_id=len(Prescription.objects.all())+1,
             patient=Patient.objects.get(patient_id=pk),
             follow_up=follow_up,
             comment=comment,
@@ -587,9 +564,12 @@ def ViewDischargeSummary(request,pk):
 class HistoryFormUpdateView(UpdateView):
     model = HistoryForm
     template_name = 'basic_app/historyform_form.html'
-    fields = ["chief_complaints","past_history","treatment_history","menstrual","obsteric_histroy",'g','p','a','l']
+
+    fields = ["chief_complaints","past_history","treatment_history","menstrual","obsteric_histroy","g","p","a","l"]
+
     def get_success_url(self):
             return reverse('basic_app:detail', kwargs={'pk': self.object.id})
+
 
 class TetanusImmunisationUpdateView(UpdateView):
     model = TetanusImmunisation

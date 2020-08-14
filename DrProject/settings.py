@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'basic_app',
-    'crispy_forms'
+    'crispy_forms',
+    'dbbackup',  # django-dbbackup
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,8 @@ USE_TZ = True
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_URL = '/static/'
+
+# DBBACKUP_STORAGE = 'dbbackup.storage.FileSystemStorage'
+# DBBACKUP_FILESYSTEM_DIRECTORY = 'F:\TanuDiDbBbackup'
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': 'F:\TanuDiDbBbackup'}

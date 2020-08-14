@@ -79,18 +79,15 @@
       <div class="modal-body">
         <!-- <span>&nbsp;</span> -->
 
-        <div class="container">
-          <div class="row">
-            {% for field in form  %}
-              <div class="col-sm-6">
-                <b>{{ field.label_tag }}</b>  {{ field }}
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-
     	<form method="POST">
     		{% csrf_token %}
+        <div class="form-row">
+          {% for field in form  %}
+          <div class="form-group col-md-6 mb-0">
+                {{ field|as_crispy_field  }}
+              </div>
+          {% endfor %}
+        </div>
     		<button class="btn btn-primary" type="submit">Submit</button>
    		</form>
       </div>

@@ -37,7 +37,7 @@ class Patient(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.name
+        return self.name+", Id: "+str(self.pk)
 
 
     # def get_absolute_url(self):
@@ -52,11 +52,19 @@ class ChiefComplaint(models.Model):
         def __str__(self):
             return self.name
 
+        class Meta:
+            ordering = ('name',)
+
+
 class PastHistory(models.Model):
         name = models.CharField(max_length=256)
 
         def __str__(self):
             return self.name
+
+        class Meta:
+            ordering = ('name',)
+
 
 class TreatmentHistory(models.Model):
         name = models.CharField(max_length=256)
@@ -64,11 +72,19 @@ class TreatmentHistory(models.Model):
         def __str__(self):
             return self.name
 
+        class Meta:
+            ordering = ('name',)
+
+
 class Menstrual(models.Model):
         name = models.CharField(max_length=256)
 
         def __str__(self):
             return self.name
+
+        class Meta:
+            ordering = ('name',)
+
 
 class ObstericHistroy(models.Model):
         name = models.CharField(max_length=256)
@@ -76,11 +92,19 @@ class ObstericHistroy(models.Model):
         def __str__(self):
             return self.name
 
+        class Meta:
+            ordering = ('name',)
+
+
 class Diagnosis(models.Model):
         name = models.CharField(max_length=256)
 
         def __str__(self):
             return self.name
+
+        class Meta:
+            ordering = ('name',)
+
 
 class Investigation(models.Model):
         name = models.CharField(max_length=256)
@@ -88,11 +112,19 @@ class Investigation(models.Model):
         def __str__(self):
             return self.name
 
+        class Meta:
+            ordering = ('name',)
+
+
 class Precaution(models.Model):
         name = models.CharField(max_length=256)
 
         def __str__(self):
             return self.name
+
+        class Meta:
+            ordering = ('name',)
+
 
 class Drug(models.Model):
         name = models.CharField(max_length=256)
@@ -100,11 +132,19 @@ class Drug(models.Model):
         def __str__(self):
             return self.name
 
+        class Meta:
+            ordering = ('name',)
+
+
 class Dosage(models.Model):
         name = models.CharField(max_length=256)
 
         def __str__(self):
             return self.name
+
+        class Meta:
+            ordering = ('name',)
+
 
 class Time(models.Model):
         name = models.CharField(max_length=256)
@@ -112,11 +152,19 @@ class Time(models.Model):
         def __str__(self):
             return self.name
 
+        class Meta:
+            ordering = ('name',)
+
+
 class PostiveNegative(models.Model):
         name = models.CharField(max_length=50)
 
         def __str__(self):
             return self.name
+
+        class Meta:
+            ordering = ('name',)
+
 
 class BloodGroup(models.Model):
         name = models.CharField(max_length=50)
@@ -127,11 +175,11 @@ class BloodGroup(models.Model):
 
 class HistoryForm(models.Model):
     patient = models.OneToOneField(Patient, related_name='historyforms', on_delete=models.CASCADE)
-    chief_complaints = models.ManyToManyField(ChiefComplaint, blank=True, default='NA')
-    past_history = models.ManyToManyField(PastHistory, blank=True, default='NA')
-    treatment_history = models.ManyToManyField(TreatmentHistory, blank=True, default='NA')
-    menstrual = models.ManyToManyField(Menstrual, blank=True, default='NA')
-    obsteric_histroy = models.ManyToManyField(ObstericHistroy, blank=True, default='NA')
+    chief_complaints = models.ManyToManyField(ChiefComplaint, blank=True)
+    past_history = models.ManyToManyField(PastHistory, blank=True)
+    treatment_history = models.ManyToManyField(TreatmentHistory, blank=True)
+    menstrual = models.ManyToManyField(Menstrual, blank=True)
+    obsteric_histroy = models.ManyToManyField(ObstericHistroy, blank=True)
     g = models.CharField(max_length=200, blank=True, default='')
     p = models.CharField(max_length=200, blank=True, default='')
     a = models.CharField(max_length=200, blank=True, default='')
@@ -147,38 +195,38 @@ class HistoryForm(models.Model):
 class PreviousReport(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     hb = models.CharField(max_length=256, blank=True, default='')
-    hb_date = models.DateField(blank=True, null=True)
+    hb_date = models.DateField(blank=True, null=True, default='1990-10-10')
     platelet = models.CharField(max_length=256, blank=True, default='')
-    platelet_date = models.DateField(blank=True, null=True)
+    platelet_date = models.DateField(blank=True, null=True, default='1990-10-10')
     bt = models.CharField(max_length=256, blank=True, default='')
-    bt_date = models.DateField(blank=True, null=True)
+    bt_date = models.DateField(blank=True, null=True, default='1990-10-10')
     ct = models.CharField(max_length=256, blank=True, default='')
-    ct_date = models.DateField(blank=True, null=True)
+    ct_date = models.DateField(blank=True, null=True, default='1990-10-10')
     bs_f = models.CharField(max_length=256, blank=True, default='')
-    bs_f_date = models.DateField(blank=True, null=True)
+    bs_f_date = models.DateField(blank=True, null=True, default='1990-10-10')
     bs_pp = models.CharField(max_length=256, blank=True, default='')
-    bs_pp_date = models.DateField(blank=True, null=True)
+    bs_pp_date = models.DateField(blank=True, null=True, default='1990-10-10')
     ur_m = models.CharField(max_length=256, blank=True, default='')
-    ur_m_date = models.DateField(blank=True, null=True)
+    ur_m_date = models.DateField(blank=True, null=True, default='1990-10-10')
     s_tsh = models.CharField(max_length=256, blank=True, default='')
-    s_tsh_date = models.DateField(blank=True, null=True)
+    s_tsh_date = models.DateField(blank=True, null=True, default='1990-10-10')
     usg = models.CharField(max_length=256, blank=True, default='')
-    usg_date = models.DateField(blank=True, null=True)
+    usg_date = models.DateField(blank=True, null=True, default='1990-10-10')
     mri_ct_scan = models.CharField(max_length=256, blank=True, default='')
-    mri_ct_scan_date = models.DateField(blank=True, null=True)
+    mri_ct_scan_date = models.DateField(blank=True, null=True, default='1990-10-10')
     ecg = models.CharField(max_length=256, blank=True, default='')
-    ecg_date = models.DateField(blank=True, null=True)
+    ecg_date = models.DateField(blank=True, null=True, default='1990-10-10')
     chest_x_ray = models.CharField(max_length=256, blank=True, default='')
-    chest_x_ray_date = models.DateField(blank=True, null=True)
+    chest_x_ray_date = models.DateField(blank=True, null=True, default='1990-10-10')
 
     blood_group = models.CharField(max_length=3, choices=blood_group, blank=True, default='')
-    blood_group_date = models.DateField(blank=True, null=True)
+    blood_group_date = models.DateField(blank=True, null=True, default='1990-10-10')
     hcv = models.CharField(max_length=10, choices=post_negat, blank=True, default='')
-    hcv_date = models.DateField(blank=True, null=True)
+    hcv_date = models.DateField(blank=True, null=True, default='1990-10-10')
     hbs_ag = models.CharField(max_length=10, choices=post_negat, blank=True, default='')
-    hbs_ag_date = models.DateField(blank=True, null=True)
+    hbs_ag_date = models.DateField(blank=True, null=True, default='1990-10-10')
     hiv =  models.CharField(max_length=10, choices=post_negat, blank=True, default='')
-    hiv_date = models.DateField(blank=True, null=True)
+    hiv_date = models.DateField(blank=True, null=True, default='1990-10-10')
     vdrl =  models.CharField(max_length=10, choices=post_negat, blank=True, default='')
     vdrl_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -239,7 +287,7 @@ class DrugDosageTimeDischarge(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.patient.name
+        return str(self.pk)
 
     class Meta:
         db_table = "DrugDosageTimeDischarge"
