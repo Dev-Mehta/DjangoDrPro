@@ -1,64 +1,351 @@
-{% load crispy_forms_tags %}
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
-  <title></title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style type="text/css">
-      .container{
-        font-family: Georgia, serif;
-      }
-    </style>
+    <title>Dr Prescription pad</title>
 </head>
+<style type="text/css" >
+
+.page-header, .page-header-space {
+  height: 270px;
+}
+
+.page-footer, .page-footer-space {
+  height: 75px;
+
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* border-top: 1px solid black; /* for demo */ */
+  /* background: yellow;  */
+}
+
+.page-header {
+  position: fixed;
+  top: 0mm;
+  width: 100%;
+  border-bottom: 8px solid #16b2e6;
+  /* border-bottom: 1px solid black; /* for demo */ */
+  background: white;
+}
+
+.page {
+  page-break-after: always;
+}
+
+@page {
+  margin: 2mm
+}
+
+@media print {
+   thead {display: table-header-group;}
+   tfoot {display: table-footer-group;}
+
+   button {display: none;}
+
+   body {margin: 0;}
+}
+
+
+    .header_wrapper {
+        display: flex;
+
+    }
+
+    .header_right {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        /* padding: 20px; */
+        /* background: #0f85ad; */
+        background-image: url('background.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 180px;
+        width: calc(100% - 240px);
+    }
+
+    .prescription_logo {
+        /* padding: 20px; */
+    }
+
+    h1 {
+    margin-bottom: 10px;
+  text-align: center;
+}
+.serif {
+  font-family: "Times New Roman", Times, serif;
+}
+
+    .dr_detail  h2 {
+        margin-top: 0;
+        color: #fff;
+        text-transform: capitalize;
+        margin-bottom: 10px;
+
+    }
+
+    .dr_detail b {
+        font-size: 16px;
+        /* line-height: 1.5;
+        margin-bottom: 2px; */
+    }
+
+    .dr_detail p {
+        font-size: 16px;
+        color: #fff;
+        /* line-height: 1.3; */
+    }
+
+    .prescription_body {
+      /* position: relative; */
+      padding: 20px;
+  }
+
+    .prescription_logo img {
+        max-width: 180px;
+    }
+
+    .header_left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 240px;
+    }
+
+    /* .pg_wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: #fff;
+    } */
+
+    /* body {
+        min-height: 100vh;
+        margin: 0;
+        background: #eae7e7;
+    } */
+
+    footer {
+        text-align: center;
+    }
+
+    .bottom_footer {
+        text-align: left;
+        padding: 6px 10px;
+        background: #0f85ad;
+        color: #fff;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      background: #fff;
+      max-width: 1000px;
+      width: 100%;
+      z-index: 111;
+  }
+
+
+
+  /* footer {
+      position: fixed;
+      bottom: 0;
+      width: 1000px;
+      max-width: 1000px;
+      width: 100%;
+      z-index: 111;
+  } */
+
+    .upper_footer {
+        padding: 6px 10px;
+        border-top: 1px solid #16b2e6;
+        color: #000;
+        background: #e7f9ff;
+    }
+    .upper_footer {
+        display: flex;
+        justify-content: center;
+    }
+
+    .add_detail span {
+        font-weight: 600;
+        display: inline-block;
+        padding-right: 4px;
+    }
+
+    .add_detail {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+    /* table.table_style {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table_style tbody tr td:first-child {
+        width: 208px;
+        border-right: 3px solid #16b2e6;
+        font-weight: bold;
+    }
+
+    .table_style tbody tr td {
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+        padding: 5px 10px;
+        font-size: 14px;
+        height: 12px;
+    }*/
+    .header_content {
+        display: flex;
+        width: 100%;
+        min-height: 190px;
+    }
+
+    .header_content .dr_detail,
+    .header_content .prescription_logo {
+      width: 33.33%;
+padding-left: 10px;
+padding-right: 10px;
+    }
+
+
+    .blank_bg {
+        min-height: 200px;
+        background: url(/static/images/last_bg.jpg) right no-repeat;
+        background-size: contain;
+        opacity: .2;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    .prescription_logo {
+        text-align: center;
+    }
+
+    .dr_detail h2 {
+        color: #000;
+        margin-bottom: 10px;
+    }
+
+    .dr_detail p {
+        color: #848484;
+    }
+
+    .dr_detail.box2 {
+        text-align: right;
+    }
+
+    .sansserif {
+      font-family: Arial, Helvetica, sans-serif;
+        padding: 6px 10px;
+    }
+</style>
 <body>
-  <div class="container">
-	<span>&nbsp;</span>
-    <h1>SAUBHAGYA HOSPITAL</h1>
-    <h4>Name: Dr. Taruna Singh</h4>
-    <h4>Designation: MBBS, DGO</h4>
-    <h4>Address: Varanasi</h4>
-    <h4>Mobile: +91 00000 00000</h4>
-    <h3>DISCHARGE SUMMARY</h1>
-    <pre><strong>
-Id: {{patient.patient_id}}
-Name: {{patient.name}}&nbsp;|&nbsp;Age: {{patient.age}}&nbsp;|&nbsp;Gender: {{patient.gender}}
-Husband Name: {{discharge.husband_name}}
-Address: {{patient.address}}
-Mobile No.: {{patient.mobile}}
-</strong>
-    </pre>
-    <span>&nbsp;</span>
-    <strong>Diagnosis: </strong> {{discharge.diagnosis}}
-    <br>
-    <br><strong>Procedure: </strong> {{discharge.procedure}}
-    <br>
-    <br><strong>Per Op: </strong> {{discharge.per_op}}
-    <br>
-    <br><strong>Baby Details: </strong> {{discharge.baby_details}}
-    <br>
-    <br><strong>Hospital Stay: </strong> {{discharge.hospital_stay}}
-    <br>
-    <br><strong>Advice On Discharge: </strong> {{discharge.advice_on_discharge}}
 
-    <h3>Mediciens:</h3> {% for d in ddt %}
-    <ul><li>
-    <strong>Drug:</strong> {{ d.drug }}
-    <strong>Dosage:</strong> {{ d.dosage }}
-    <strong>Time:</strong> {{ d.time }}
-  </li>
-  </ul>
-    {% endfor %}
+        <div class="page-header">
+          <h1 class="serif">SAUBHAGYA HOSPITAL</h1>
+            <div class="header_wrapper">
+                <div class="header_content">
+                    <div class="dr_detail box1">
+                        <h2>Dr. Taruna Singh</h2>
+                        <b>Regd No.: 58848</b>
+                        <p>MBBS, DGO(LHMC, New Delhi), DNB(KNMH, Allahabad)</br><b style="line-height: 1.5; font-size: 20px;">Obstetrician & Gynecologist</b></br><strong>Time: </strong>Mon-Sat (Sunday Closed)</br>09:00 AM-12:00 PM(Morning)<br>05:00 AM-07:00 PM(Evening)</p>
+                    </div>
+                    <div class="prescription_logo">
+                        <img src="{% static "images/logo.jpg" %}" alt="logo" onclick="javascript:window.print()">
+                    </div>
+                    <div class="dr_detail box2">
+                        <h2>Dr Neeteesh Ku. Roy</h2>
+                        <b>Regd No.: 50810</b>
+                        <p>MBBS, MS, Mch(PGI, Chandigarh)</br><b style="line-height: 1.5; font-size: 20px;">Neuro & Spine Surgeon</b></br><strong>Time: </strong>Sunday<br>10:00 AM-01:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <h3>Precautions: <h5>
-        {% for p in discharge.precaution.all %}
-        {{ p }}&#44;
-        {% endfor %}
-      </h5>
-    </h3>
+        <table>
+            <thead>
+              <tr>
+                <td>
+                  <!--place holder for the fixed-position header-->
+                  <div class="page-header-space"></div>
+                </td>
+              </tr>
+            </thead>
 
-  <h3>Follow Up:</h3> {{ discharge.follow_up }}
-  <h3>Comment:</h3> {{ discharge.comment }}
+            <tbody>
+              <tr>
+                <td>
+                  <!--*** CONTENT GOES HERE ***-->
+                  <div class="page">
+                    <div class="prescription_body">
+                      <div class="blank_bg"></div>
+                      <div class="container">
 
-  </div>
+                        <div class="sansserif">
+                          <p><strong>Name: </strong>{{patient.name}} &nbsp;&nbsp;&nbsp;  <strong>Age: </strong> {{patient.age}} &nbsp;&nbsp;&nbsp; <strong>Gender: </strong>{{patient.gender}}  &nbsp;&nbsp;&nbsp; <strong>Mobile No.: </strong>{{patient.mobile}}</p>
+                          <p><strong>Husband Name: </strong>{{discharge.husband_name}}   &nbsp;&nbsp;&nbsp; <p><strong>Address: </strong>{{patient.address}}   &nbsp;&nbsp;&nbsp; <strong>Id: </strong> {{patient.patient_id}}</p>
+                        </div>
+
+                        <span>&nbsp;</span>
+                        <strong>Diagnosis: </strong> {{discharge.diagnosis}}
+                        <br>
+                        <br><strong>Procedure: </strong> {{discharge.procedure}}
+                        <br>
+                        <br><strong>Per Op: </strong> {{discharge.per_op}}
+                        <br>
+                        <br><strong>Baby Details: </strong> {{discharge.baby_details}}
+                        <br>
+                        <br><strong>Hospital Stay: </strong> {{discharge.hospital_stay}}
+                        <br>
+                        <br><strong>Advice On Discharge: </strong> {{discharge.advice_on_discharge}}
+
+                          <br>
+                          <br><strong>Mediciens:</strong> {% for d in ddt %}
+                          <ul><li>
+                          <strong>Drug:</strong> {{ d.drug }}
+                          <strong>Dosage:</strong> {{ d.dosage }}
+                          <strong>Time:</strong> {{ d.time }}
+                        </li>
+                        </ul>
+                          {% endfor %}
+
+
+                        <br><strong>Precautions: </strong>
+                            {% for p in discharge.precaution.all %}
+                            {{ p }}&#44;
+                            {% endfor %}
+                        <br>
+                        <br><strong>Follow Up: </strong>{{ discharge.follow_up }}
+                        <br>
+                        <br><strong>Comment: </strong>{{ discharge.comment }}
+
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <td>
+                  <!--place holder for the fixed-position footer-->
+                  <div class="page-footer-space"></div>
+                </td>
+              </tr>
+            </tfoot>
+        </table>
+
+        <div class="page-footer">
+            <div class="upper_footer"><div class="add_detail"><span>Email:</span>saubhagyavaranasi39@gmail.com</div><div class="add_detail"><span>Phone:</span>9369157869</div></div>
+            <div class="bottom_footer"><b>Address:</b>sdfghjksdfghjsdfghjdf fhbvhsbsbshbhvb shdbhsbjhsbsj sdbhjsdbshdfbshdbsjdfbfbhdsfbshdfhjsfbhsdfbsdhfbsdf sdhfbsdhfbsdhfbjhsfgh</div>
+        </div>
+
 </body>
 </html>

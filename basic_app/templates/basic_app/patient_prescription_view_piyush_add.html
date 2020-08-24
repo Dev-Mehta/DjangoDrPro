@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Dr Prescription pad</title>
+</head>
+<style type="text/css" >
+    .header_wrapper {
+        display: flex;
+        border-bottom: 8px solid #16b2e6;
+    }
+
+    .header_right {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        /* padding: 20px; */
+        /* background: #0f85ad; */
+        background-image: url('background.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 180px;
+        width: calc(100% - 240px);
+    }
+
+    .prescription_logo {
+        padding: 20px;
+    }
+
+    .dr_detail  h2 {
+        margin-top: 0;
+        color: #fff;
+        text-transform: capitalize;
+    }
+
+    .dr_detail b {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .dr_detail p {
+        font-size: 14px;
+        color: #fff;
+        line-height: 1.3;
+    }
+
+    .prescription_logo img {
+        max-width: 180px;
+    }
+
+    .header_left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 240px;
+    }
+
+    .pg_wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: #fff;
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        background: #eae7e7;
+        padding: 40px;
+    }
+
+    footer {
+        text-align: center;
+    }
+
+    .bottom_footer {
+        text-align: left;
+        padding: 6px 10px;
+        background: #0f85ad;
+        color: #fff;
+    }
+
+    .upper_footer {
+        padding: 6px 10px;
+        border-top: 1px solid #16b2e6;
+        color: #000;
+        background: #e7f9ff;
+    }
+
+    table.table_style {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table_style tbody tr td:first-child {
+        width: 208px;
+        border-right: 3px solid #16b2e6;
+        font-weight: bold;
+    }
+
+    .table_style tbody tr td {
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+        padding: 5px 10px;
+        font-size: 14px;
+        height: 12px;
+    }
+    .header_content {
+        display: flex;
+        width: 100%;
+        min-height: 190px;
+    }
+
+    .header_content .dr_detail,
+    .header_content .prescription_logo {
+        width: 33.33%;
+        padding: 10px;
+    }
+
+    .prescription_logo {
+        text-align: center;
+    }
+
+    .dr_detail h2 {
+        color: #000;
+        margin-bottom: 10px;
+    }
+
+    .dr_detail p {
+        color: #848484;
+    }
+
+    .dr_detail.box2 {
+        text-align: right;
+    }
+</style>
+<body>
+    <div class="pg_wrapper">
+        <header>
+
+            <div class="header_wrapper">
+                <div class="header_content">
+                  <!-- <img src="{% static "images/background.jpg" %}" alt="Uh Oh, didn't show!"> -->
+                    <div class="dr_detail box1">
+                        <h2>Dr. Taruna Singh</h2>
+                        <b>Regd No.: 58848</b>
+                        <p>MBBS, DGO(Lady Hardinge Medical College, New Delhi), DNB(KNMH, Allahabad)</br><b>Obstetrician & Gynecologist</b></br><strong>Time: </strong>Mon-Sat(Sunday Closed)</br>09:00 AM-12:00 PM</br>05:00 AM-07:00 PM</p>
+                    </div>
+                    <div class="prescription_logo">
+                        <img src="{% static "images/logo.jpg" %}" alt="logo" onclick="javascript:window.print()">
+                    </div>
+                    <div class="dr_detail box2">
+                        <h2>Dr Neeteesh Ku. Roy</h2>
+                        <b>Regd No.: 50810</b>
+                        <p>MBBS, MS, Mch(PGI, Chandigarh)</br><b>Neuro & Spine Surgeon</b></br><strong>Time: </strong>Sunday<br>10:00 AM-01:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="prescription_body">
+            <div class="prescription_table">
+                <table class="table_style">
+                    <tbody>
+                        <tr>
+                            <td>Name:</td>
+                            <td>{{patient.patient_id}}</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Age:</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Sex:</td>
+                            <td>M</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Adv:</td>
+                            <td>abc abc abc abc</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="container">
+      	<span>&nbsp;</span>
+          <pre><strong>
+            Id: {{patient.patient_id}}
+            Name: {{patient.name}}&nbsp;|&nbsp;Age: {{patient.age}}&nbsp;|&nbsp;Gender: {{patient.gender}}&nbsp;|&nbsp;Mobile No.: {{patient.mobile}}
+            Address: {{patient.address}}</strong>
+          </pre>
+          <!-- <span>&nbsp;</span> -->
+          <strong>Diagnosis: </strong>
+              {% for p in prescription.diagnosis.all %}
+              {{ p }}&#44;
+              {% endfor %}
+
+          <br>
+          <br><strong>Investigation: </strong>
+              {% for p in prescription.investigation.all %}
+              {{ p }}&#44;
+              {% endfor %}
+
+          <br>
+          <br><strong>Mediciens:</strong> {% for d in ddt %}
+          <ul><li>
+          <strong>Drug:</strong> {{ d.drug }}
+          <strong>Dosage:</strong> {{ d.dosage }}
+          <strong>Time:</strong> {{ d.time }}
+        </li>
+        </ul>
+          {% endfor %}
+
+          <br><strong>Precautions: </strong>
+              {% for p in prescription.precaution.all %}
+              {{ p }}&#44;
+              {% endfor %}
+        <br>
+        <br><strong>Follow Up: </strong>{{ prescription.follow_up }}
+        <br>
+        <br><strong>Comment: </strong>{{ prescription.comment }}
+
+        </div>
+
+
+
+        <footer>
+            <div class="upper_footer"><b>Note:</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</div>
+            <div class="bottom_footer"><b>Address:</b> Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+        </footer>
+    </div>
+</body>
+</html>

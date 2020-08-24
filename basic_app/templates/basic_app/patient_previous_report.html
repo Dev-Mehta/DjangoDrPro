@@ -37,25 +37,45 @@
     </thead>
 	{% for r in reports %}
   <tbody>
+    <!-- {% if r.field is None %}
+      r.value = ""
+    {% endif %} -->
+
 		<tr>
-			<td>{{r.hb}}
-      <br>on {{r.hb_date}}</td>
-			<td>{{r.platelet}}</td>
-      <td>{{r.bt}}</td>
-      <td>{{r.ct}}</td>
-      <td>{{r.bs_f}}</td>
-      <td>{{r.bs_pp}}</td>
-      <td>{{r.ur_m}}</td>
-      <td>{{r.s_tsh}}</td>
-      <td>{{r.usg}}</td>
-      <td>{{r.mri_ct_scan}}</td>
-      <td>{{r.ecg}}</td>
-      <td>{{r.chest_x_ray}}</td>
-      <td>{{r.blood_group}}</td>
-      <td>{{r.hcv}}</td>
-      <td>{{r.hbs_ag}}</td>
-      <td>{{r.hiv}}</td>
-      <td>{{r.vdrl}}</td>
+			<td>{{r.hb}}&#44;
+      <br>{{r.hb_date}}</td>
+			<td>{{r.platelet}}&#44;
+      <br>{{r.platelet_date}}</td>
+      <td>{{r.bt}}&#44;
+      <br>{{r.bt_date}}</td>
+      <td>{{r.ct}}&#44;
+      <br>{{r.ct_date}}</td>
+      <td>{{r.bs_f}}&#44;
+      <br>{{r.bs_f_date}}</td>
+      <td>{{r.bs_pp}}&#44;
+      <br>{{r.bs_pp_date}}</td>
+      <td>{{r.ur_m}}&#44;
+      <br>{{r.ur_m_date}}</td>
+      <td>{{r.s_tsh}}&#44;
+      <br>{{r.s_tsh_date}}</td>
+      <td>{{r.usg}}&#44;
+      <br>{{r.usg_date}}</td>
+      <td>{{r.mri_ct_scan}}&#44;
+      <br>{{r.mri_ct_scan_date}}</td>
+      <td>{{r.ecg}}&#44;
+      <br>{{r.ecg_date}}</td>
+      <td>{{r.chest_x_ray}}&#44;
+      <br>{{r.chest_x_ray_date}}</td>
+      <td>{{r.blood_group}}&#44;
+      <br>{{r.blood_group_date}}</td>
+      <td>{{r.hcv}}&#44;
+      <br>{{r.hcv_date}}</td>
+      <td>{{r.hbs_ag}}&#44;
+      <br>{{r.hbs_ag_date}}</td>
+      <td>{{r.hiv}}&#44;
+      <br>{{r.hiv_date}}</td>
+      <td>{{r.vdrl}}&#44;
+      <br>{{r.vdrl_date}}</td>
 			<td><small>{{r.created_at}}</small></td>
 		</tr>
     </tbody>
@@ -107,95 +127,125 @@
 <body>
 
 <script>
-
   $( function() {
     $( "#id_hb_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_platelet_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_bt_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_ct_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_bs_f_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_bs_pp_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_ur_m_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_s_tsh_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_usg_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_mri_ct_scan_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_ecg_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_chest_x_ray_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_blood_group_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_hcv_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_hbs_ag_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_hiv_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
     $( "#id_vdrl_date" ).datepicker({
       autoHide: true,
       zIndex: 2048,
       format: 'YYYY-MM-DD',
+      date: null,
     });
   } );
-  </script>
-  <div class="datepicker-container datepicker-dropdown datepicker-top-left datepicker-hide" style="z-index: 2048; top: 155.6px; left: 115.4px;"><div class="datepicker-panel datepicker-hide" data-view="years picker"><ul><li data-view="years prev">‹</li><li data-view="years current"></li><li data-view="years next">›</li></ul><ul data-view="years"></ul></div><div class="datepicker-panel datepicker-hide" data-view="months picker"><ul><li data-view="year prev">‹</li><li data-view="year current"></li><li data-view="year next">›</li></ul><ul data-view="months"></ul></div><div class="datepicker-panel" data-view="days picker"><ul><li data-view="month prev">‹</li><li data-view="month current">August 2020</li><li data-view="month next">›</li></ul><ul data-view="week"><li class="" data-view="">Su</li><li class="" data-view="">Mo</li><li class="" data-view="">Tu</li><li class="" data-view="">We</li><li class="" data-view="">Th</li><li class="" data-view="">Fr</li><li class="" data-view="">Sa</li></ul><ul data-view="days"><li class="muted" data-view="day prev">26</li><li class="muted" data-view="day prev">27</li><li class="muted" data-view="day prev">28</li><li class="muted" data-view="day prev">29</li><li class="muted" data-view="day prev">30</li><li class="muted" data-view="day prev">31</li><li class="" data-view="day">1</li><li class="" data-view="day">2</li><li class="" data-view="day">3</li><li class="" data-view="day">4</li><li class="" data-view="day">5</li><li class="" data-view="day">6</li><li class="" data-view="day">7</li><li class="" data-view="day">8</li><li class="" data-view="day">9</li><li class="" data-view="day">10</li><li class="" data-view="day">11</li><li class="picked" data-view="day picked">12</li><li class="highlighted" data-view="day">13</li><li class="" data-view="day">14</li><li class="" data-view="day">15</li><li class="" data-view="day">16</li><li class="" data-view="day">17</li><li class="" data-view="day">18</li><li class="" data-view="day">19</li><li class="" data-view="day">20</li><li class="" data-view="day">21</li><li class="" data-view="day">22</li><li class="" data-view="day">23</li><li class="" data-view="day">24</li><li class="" data-view="day">25</li><li class="" data-view="day">26</li><li class="" data-view="day">27</li><li class="" data-view="day">28</li><li class="" data-view="day">29</li><li class="" data-view="day">30</li><li class="" data-view="day">31</li><li class="muted" data-view="day next">1</li><li class="muted" data-view="day next">2</li><li class="muted" data-view="day next">3</li><li class="muted" data-view="day next">4</li><li class="muted" data-view="day next">5</li></ul></div></div>
+
+  // $('[data-dismiss=modal]').on('click', function (e) {
+  //     var $t = $(this),
+  //         target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
+  //
+  //   $(target)
+  //     .find("input,textarea,select")
+  //        .val('')
+  //        .end();
+  // })
+
+
+</script>
+
+<div class="datepicker-container datepicker-dropdown datepicker-top-left datepicker-hide" style="z-index: 2048; top: 155.6px; left: 115.4px;"><div class="datepicker-panel datepicker-hide" data-view="years picker"><ul><li data-view="years prev">‹</li><li data-view="years current"></li><li data-view="years next">›</li></ul><ul data-view="years"></ul></div><div class="datepicker-panel datepicker-hide" data-view="months picker"><ul><li data-view="year prev">‹</li><li data-view="year current"></li><li data-view="year next">›</li></ul><ul data-view="months"></ul></div><div class="datepicker-panel" data-view="days picker"><ul><li data-view="month prev">‹</li><li data-view="month current">August 2020</li><li data-view="month next">›</li></ul><ul data-view="week"><li class="" data-view="">Su</li><li class="" data-view="">Mo</li><li class="" data-view="">Tu</li><li class="" data-view="">We</li><li class="" data-view="">Th</li><li class="" data-view="">Fr</li><li class="" data-view="">Sa</li></ul><ul data-view="days"><li class="muted" data-view="day prev">26</li><li class="muted" data-view="day prev">27</li><li class="muted" data-view="day prev">28</li><li class="muted" data-view="day prev">29</li><li class="muted" data-view="day prev">30</li><li class="muted" data-view="day prev">31</li><li class="" data-view="day">1</li><li class="" data-view="day">2</li><li class="" data-view="day">3</li><li class="" data-view="day">4</li><li class="" data-view="day">5</li><li class="" data-view="day">6</li><li class="" data-view="day">7</li><li class="" data-view="day">8</li><li class="" data-view="day">9</li><li class="" data-view="day">10</li><li class="" data-view="day">11</li><li class="picked" data-view="day picked">12</li><li class="highlighted" data-view="day">13</li><li class="" data-view="day">14</li><li class="" data-view="day">15</li><li class="" data-view="day">16</li><li class="" data-view="day">17</li><li class="" data-view="day">18</li><li class="" data-view="day">19</li><li class="" data-view="day">20</li><li class="" data-view="day">21</li><li class="" data-view="day">22</li><li class="" data-view="day">23</li><li class="" data-view="day">24</li><li class="" data-view="day">25</li><li class="" data-view="day">26</li><li class="" data-view="day">27</li><li class="" data-view="day">28</li><li class="" data-view="day">29</li><li class="" data-view="day">30</li><li class="" data-view="day">31</li><li class="muted" data-view="day next">1</li><li class="muted" data-view="day next">2</li><li class="muted" data-view="day next">3</li><li class="muted" data-view="day next">4</li><li class="muted" data-view="day next">5</li></ul></div></div>
+
   </body>
 {% endblock extra_javascript %}

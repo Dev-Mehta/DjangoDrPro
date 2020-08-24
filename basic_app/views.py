@@ -64,48 +64,99 @@ def PatientDetailView(request, pk):
                 ht=request.POST.get('ht'),
                 uterus_funal_ht=request.POST.get('uterus_funal_ht'),
                 presentation=request.POST.get('presentation'),
-                fms=request.POST.get('fms'),
+                fhs=request.POST.get('fhs'),
                 per_vaginum=request.POST.get('per_vaginum'),
             )
             pr.save()
             # return HttpResponse('created')
         else:
+            hb_date = request.POST.get('hb_date')
+            if hb_date == '':
+                hb_date = None
+            platelet_date = request.POST.get('platelet_date')
+            if platelet_date == '':
+                platelet_date = None
+            bt_date = request.POST.get('bt_date')
+            if bt_date == '':
+                bt_date = None
+            ct_date = request.POST.get('ct_date')
+            if ct_date == '':
+                ct_date = None
+            bs_f_date = request.POST.get('bs_f_date')
+            if bs_f_date == '':
+                bs_f_date = None
+            bs_pp_date = request.POST.get('bs_pp_date')
+            if bs_pp_date == '':
+                bs_pp_date = None
+            ur_m_date = request.POST.get('ur_m_date')
+            if ur_m_date == '':
+                ur_m_date = None
+            s_tsh_date = request.POST.get('s_tsh_date')
+            if s_tsh_date == '':
+                s_tsh_date = None
+            usg_date = request.POST.get('usg_date')
+            if usg_date == '':
+                usg_date = None
+            mri_ct_scan_date = request.POST.get('mri_ct_scan_date')
+            if mri_ct_scan_date == '':
+                mri_ct_scan_date = None
+            ecg_date = request.POST.get('ecg_date')
+            if ecg_date == '':
+                ecg_date = None
+            chest_x_ray_date = request.POST.get('chest_x_ray_date')
+            if chest_x_ray_date == '':
+                chest_x_ray_date = None
+            blood_group_date = request.POST.get('blood_group_date')
+            if blood_group_date == '':
+                blood_group_date = None
+            hcv_date = request.POST.get('hcv_date')
+            if hcv_date == '':
+                hcv_date = None
+            hbs_ag_date = request.POST.get('hbs_ag_date')
+            if hbs_ag_date == '':
+                hbs_ag_date = None
+            hiv_date = request.POST.get('hiv_date')
+            if hiv_date == '':
+                hiv_date = None
+            vdrl_date = request.POST.get('vdrl_date')
+            if vdrl_date == '':
+                vdrl_date = None
             p = PreviousReport(
                 patient=Patient.objects.get(patient_id=pk),
                 hb=request.POST.get('hb'),
-                hb_date = request.POST.get('hb_date'),
+                hb_date=hb_date,
                 platelet=request.POST.get('platelet'),
-                platelet_date = request.POST.get('platelet_date'),
+                platelet_date=platelet_date,
                 bt=request.POST.get('bt'),
-                bt_date = request.POST.get('bt_date'),
+                bt_date=bt_date,
                 ct=request.POST.get('ct'),
-                ct_date = request.POST.get('ct_date'),
+                ct_date=ct_date,
                 bs_f=request.POST.get('bs_f'),
-                bs_f_date = request.POST.get('bs_f_date'),
+                bs_f_date=bs_f_date,
                 bs_pp=request.POST.get('bs_pp'),
-                bs_pp_date = request.POST.get('bs_pp_date'),
+                bs_pp_date=bs_pp_date,
                 ur_m=request.POST.get('ur_m'),
-                ur_m_date = request.POST.get('ur_m_date'),
+                ur_m_date=ur_m_date,
                 s_tsh=request.POST.get('s_tsh'),
-                s_tsh_date = request.POST.get('s_tsh_date'),
+                s_tsh_date=s_tsh_date,
                 usg=request.POST.get('usg'),
-                usg_date = request.POST.get('usg_date'),
+                usg_date=usg_date,
                 mri_ct_scan=request.POST.get('mri_ct_scan'),
-                mri_ct_scan_date = request.POST.get('mri_ct_scan_date'),
+                mri_ct_scan_date=mri_ct_scan_date,
                 ecg=request.POST.get('ecg'),
-                ecg_date = request.POST.get('ecg_date'),
+                ecg_date=ecg_date,
                 chest_x_ray=request.POST.get('chest_x_ray'),
-                chest_x_ray_date = request.POST.get('chest_x_ray_date'),
+                chest_x_ray_date=chest_x_ray_date,
                 blood_group=request.POST.get('blood_group'),
-                blood_group_date = request.POST.get('blood_group_date'),
+                blood_group_date=blood_group_date,
                 hcv=request.POST.get('hcv'),
-                hcv_date = request.POST.get('hcv_date'),
+                hcv_date=hcv_date,
                 hbs_ag=request.POST.get('hbs_ag'),
-                hbs_ag_date = request.POST.get('hbs_ag_date'),
+                hbs_ag_date=hbs_ag_date,
                 hiv=request.POST.get('hiv'),
-                hiv_date = request.POST.get('hiv_date'),
+                hiv_date=hiv_date,
                 vdrl=request.POST.get('vdrl'),
-                vdrl_date = request.POST.get('vdrl_date'),
+                vdrl_date=vdrl_date,
             )
             p.save()
         return HttpResponse('created')
@@ -131,17 +182,23 @@ def PatientDetailView(request, pk):
             phy = PhysicalExamination.objects.filter(patient=patient_details).order_by('-created_at')[:5]
             prescription = Prescription.objects.filter(patient=patient_details)
             downloadable = "false"
+            ddt = ""
             if prescription.exists():
                 prescription = prescription.last()
-                downloadable = "true"
-            ddt = DrugDosageTime.objects.filter(patient=patient_details)
+                ddt = DrugDosageTime.objects.filter(prescription=prescription)
+                if ddt.exists():
+                    downloadable = "true"
+
 
             discharge_summary = DischargeSummary.objects.filter(patient=patient_details)
+            ddt_dis = ""
             dischdownload = "false"
             if discharge_summary.exists():
                 discharge_summary = discharge_summary.last()
-                dischdownload = "true"
-            ddt_dis = DrugDosageTimeDischarge.objects.filter(patient=patient_details)
+                ddt_dis = DrugDosageTimeDischarge.objects.filter(discharge_summary = discharge_summary)
+                if ddt_dis.exists():
+                    dischdownload = "true"
+
             return render(request, "basic_app/patient_detail.html",
                 {"patient_details":patient_details,
                 "patient_history":hf,
@@ -166,42 +223,93 @@ def PreviousReportView(request, pk):
     if request.method == "POST":
         content = PreviousReport.objects.filter(patient=Patient.objects.get(patient_id=pk)).order_by('-created_at')
         form = PreviousReportForm(request.POST)
+        hb_date = request.POST.get('hb_date')
+        if hb_date == '':
+            hb_date = None
+        platelet_date = request.POST.get('platelet_date')
+        if platelet_date == '':
+            platelet_date = None
+        bt_date = request.POST.get('bt_date')
+        if bt_date == '':
+            bt_date = None
+        ct_date = request.POST.get('ct_date')
+        if ct_date == '':
+            ct_date = None
+        bs_f_date = request.POST.get('bs_f_date')
+        if bs_f_date == '':
+            bs_f_date = None
+        bs_pp_date = request.POST.get('bs_pp_date')
+        if bs_pp_date == '':
+            bs_pp_date = None
+        ur_m_date = request.POST.get('ur_m_date')
+        if ur_m_date == '':
+            ur_m_date = None
+        s_tsh_date = request.POST.get('s_tsh_date')
+        if s_tsh_date == '':
+            s_tsh_date = None
+        usg_date = request.POST.get('usg_date')
+        if usg_date == '':
+            usg_date = None
+        mri_ct_scan_date = request.POST.get('mri_ct_scan_date')
+        if mri_ct_scan_date == '':
+            mri_ct_scan_date = None
+        ecg_date = request.POST.get('ecg_date')
+        if ecg_date == '':
+            ecg_date = None
+        chest_x_ray_date = request.POST.get('chest_x_ray_date')
+        if chest_x_ray_date == '':
+            chest_x_ray_date = None
+        blood_group_date = request.POST.get('blood_group_date')
+        if blood_group_date == '':
+            blood_group_date = None
+        hcv_date = request.POST.get('hcv_date')
+        if hcv_date == '':
+            hcv_date = None
+        hbs_ag_date = request.POST.get('hbs_ag_date')
+        if hbs_ag_date == '':
+            hbs_ag_date = None
+        hiv_date = request.POST.get('hiv_date')
+        if hiv_date == '':
+            hiv_date = None
+        vdrl_date = request.POST.get('vdrl_date')
+        if vdrl_date == '':
+            vdrl_date = None
         pr = PreviousReport(
             patient=Patient.objects.get(patient_id=pk),
             hb=request.POST.get('hb'),
-            hb_date = request.POST.get('hb_date'),
+            hb_date=hb_date,
             platelet=request.POST.get('platelet'),
-            platelet_date = request.POST.get('platelet_date'),
+            platelet_date=platelet_date,
             bt=request.POST.get('bt'),
-            bt_date = request.POST.get('bt_date'),
+            bt_date=bt_date,
             ct=request.POST.get('ct'),
-            ct_date = request.POST.get('ct_date'),
+            ct_date=ct_date,
             bs_f=request.POST.get('bs_f'),
-            bs_f_date = request.POST.get('bs_f_date'),
+            bs_f_date=bs_f_date,
             bs_pp=request.POST.get('bs_pp'),
-            bs_pp_date = request.POST.get('bs_pp_date'),
+            bs_pp_date=bs_pp_date,
             ur_m=request.POST.get('ur_m'),
-            ur_m_date = request.POST.get('ur_m_date'),
+            ur_m_date=ur_m_date,
             s_tsh=request.POST.get('s_tsh'),
-            s_tsh_date = request.POST.get('s_tsh_date'),
+            s_tsh_date=s_tsh_date,
             usg=request.POST.get('usg'),
-            usg_date = request.POST.get('usg_date'),
+            usg_date=usg_date,
             mri_ct_scan=request.POST.get('mri_ct_scan'),
-            mri_ct_scan_date = request.POST.get('mri_ct_scan_date'),
+            mri_ct_scan_date=mri_ct_scan_date,
             ecg=request.POST.get('ecg'),
-            ecg_date = request.POST.get('ecg_date'),
+            ecg_date=ecg_date,
             chest_x_ray=request.POST.get('chest_x_ray'),
-            chest_x_ray_date = request.POST.get('chest_x_ray_date'),
+            chest_x_ray_date=chest_x_ray_date,
             blood_group=request.POST.get('blood_group'),
-            blood_group_date = request.POST.get('blood_group_date'),
+            blood_group_date=blood_group_date,
             hcv=request.POST.get('hcv'),
-            hcv_date = request.POST.get('hcv_date'),
+            hcv_date=hcv_date,
             hbs_ag=request.POST.get('hbs_ag'),
-            hbs_ag_date = request.POST.get('hbs_ag_date'),
+            hbs_ag_date=hbs_ag_date,
             hiv=request.POST.get('hiv'),
-            hiv_date = request.POST.get('hiv_date'),
+            hiv_date=hiv_date,
             vdrl=request.POST.get('vdrl'),
-            vdrl_date = request.POST.get('vdrl_date'),
+            vdrl_date=vdrl_date,
         )
         pr.save()
         return render(request, "basic_app/patient_previous_report.html", {"form":form,"reports":content})
@@ -221,7 +329,7 @@ def PhysicalExaminationView(request, pk):
             ht=request.POST.get('ht'),
             uterus_funal_ht=request.POST.get('uterus_funal_ht'),
             presentation=request.POST.get('presentation'),
-            fms=request.POST.get('fms'),
+            fhs=request.POST.get('fhs'),
             per_vaginum=request.POST.get('per_vaginum'),
         )
         pr.save()
@@ -304,12 +412,14 @@ def HistoryFormCreateView(request,pk):
 def TetanusImmunisationCreateView(request,pk):
     if request.method == "POST":
         form = TetanusImmunisationCreateForm(request.POST)
-        date1 = request.POST.get('date_tt1')
-
         if form.is_valid():
             p = Patient.objects.get(patient_id=pk)
             date_tt1 = request.POST.get('date_tt1')
+            if date_tt1 == '':
+                date_tt1 = None
             date_tt2 = request.POST.get('date_tt2')
+            if date_tt2 == '':
+                date_tt2 = None
             h = TetanusImmunisation.objects.filter(patient=p)
             if h.exists():
                 h = h[0]
@@ -368,9 +478,9 @@ def CreatePrescription(request,pk):
         precaut = request.POST.get('precaution')
         precaut = precaut.split('<opt>')
         precaut.pop()
-        drug = request.POST.get('drug')
-        dosage = request.POST.get('dosage')
-        time = request.POST.get('time')
+        # drug = request.POST.get('drug')
+        # dosage = request.POST.get('dosage')
+        # time = request.POST.get('time')
 
         follow_up = request.POST.get("follow_up")
         comment = request.POST.get("comment")
@@ -391,18 +501,18 @@ def CreatePrescription(request,pk):
             d = Precaution.objects.get(name=precaut)
             prescription.precaution.add(d)
         prescription.save()
-        old_ddts = DrugDosageTime.objects.all()
-        for i in old_ddts.iterator():
-            i.delete()
-        for i in new_ddt:
-            i.save()
-        ddt = DrugDosageTime(
-            patient=Patient.objects.get(patient_id=pk),
-            drug=Drug.objects.get(name=drug),
-            dosage=Dosage.objects.get(name=dosage),
-            time=Time.objects.get(name=time)
-        )
-        ddt.save()
+        # old_ddts = DrugDosageTime.objects.all()
+        # for i in old_ddts.iterator():
+        #     i.delete()
+        # for i in new_ddt:
+        #     i.save()
+        # ddt = DrugDosageTime(
+        #     patient=Patient.objects.get(patient_id=pk),
+        #     drug=Drug.objects.get(name=drug),
+        #     dosage=Dosage.objects.get(name=dosage),
+        #     time=Time.objects.get(name=time)
+        # )
+        # ddt.save()
         p = Patient.objects.get(patient_id=pk)
         new_ddt = []
         return HttpResponse("created")
@@ -449,28 +559,29 @@ def createDDTDischarge(request,pk):
 
 def ViewPrescription(request,pk):
     patient_details = Patient.objects.get(patient_id=pk)
-    hf = HistoryForm.objects.get(patient=patient_details)
-    pr = PreviousReport.objects.filter(patient=patient_details).order_by('-created_at')
+    # hf = HistoryForm.objects.get(patient=patient_details)
+    # pr = PreviousReport.objects.filter(patient=patient_details).order_by('-created_at')
     prescription = Prescription.objects.filter(patient=patient_details).order_by('-created_at')[0]
-    ddt = DrugDosageTime.objects.filter(patient=patient_details)
+    ddt = DrugDosageTime.objects.filter(prescription=prescription)
     context = {
                 "patient":patient_details,
-                "history":hf,
-                "previous_reports":pr,
+                # "history":hf,
+                # "previous_reports":pr,
                 "ddt":ddt,
                 "prescription":prescription
             }
-    pdf = render_to_pdf('basic_app/patient_prescription_view.html', context)
-    if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            # filename = f"Prescription_{patient_details.name}.pdf"
-            # content = f"inline; filename={filename}"
-            # download = request.GET.get("download")
-            # if download:
-            #     content = f"attachment; filename={filename}"
-            # response['Content-Disposition'] = content
-            return response
-    return HttpResponse("PDF Not Found")
+    return  render(request, "basic_app/patient_prescription_view.html", context)
+    # pdf = render_to_pdf('basic_app/patient_prescription_view.html', context)
+    # if pdf:
+    #         response = HttpResponse(pdf, content_type='application/pdf')
+    #         # filename = f"Prescription_{patient_details.name}.pdf"
+    #         # content = f"inline; filename={filename}"
+    #         # download = request.GET.get("download")
+    #         # if download:
+    #         #     content = f"attachment; filename={filename}"
+    #         # response['Content-Disposition'] = content
+    #         return response
+    # return HttpResponse("PDF Not Found")
 
 @csrf_exempt
 def CreateDischargeSummary(request,pk):
@@ -486,6 +597,13 @@ def CreateDischargeSummary(request,pk):
     if request.method == "POST":
         global new_ddt_dis
         husband_name = request.POST.get('husband_name')
+
+        doa = request.POST.get('doa')
+        if doa == '':
+            doa = None
+        dod = request.POST.get('dod')
+        if dod == '':
+            dod = None
         diagnosis = request.POST.get('diagnosis')
         procedure = request.POST.get('procedure')
         per_op = request.POST.get('per_op')
@@ -504,9 +622,11 @@ def CreateDischargeSummary(request,pk):
         follow_up = request.POST.get('follow_up')
         comment = request.POST.get('comment')
         discharge_summary = DischargeSummary(
-            discharge_id=len(DischargeSummary.objects.all())+1,
+            # discharge_id=len(DischargeSummary.objects.all())+1,
             patient=Patient.objects.get(patient_id=pk),
             husband_name=husband_name,
+            doa=doa,
+            dod=dod,
             diagnosis=diagnosis,
             procedure=procedure,
             per_op=per_op,
@@ -543,23 +663,24 @@ def ViewDischargeSummary(request,pk):
     # hf = HistoryForm.objects.get(patient=patient_details)
     # pr = PreviousReport.objects.filter(patient=patient_details).order_by('-created_at')
     discharge_summary = DischargeSummary.objects.filter(patient=patient_details).order_by('-created_at')[0]
-    ddt = DrugDosageTimeDischarge.objects.filter(patient=patient_details)
+    ddt = DrugDosageTimeDischarge.objects.filter(discharge_summary=discharge_summary)
     context = {
                 "patient":patient_details,
                 "ddt":ddt,
                 "discharge":discharge_summary
             }
-    pdf = render_to_pdf('basic_app/discharge_summary_view.html', context)
-    if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            # filename = f"Prescription_{patient_details.name}.pdf"
-            # content = f"inline; filename={filename}"
-            # download = request.GET.get("download")
-            # if download:
-            #     content = f"attachment; filename={filename}"
-            # response['Content-Disposition'] = content
-            return response
-    return HttpResponse("PDF Not Found")
+    return  render(request, "basic_app/discharge_summary_view.html", context)
+    # pdf = render_to_pdf('basic_app/discharge_summary_view.html', context)
+    # if pdf:
+    #         response = HttpResponse(pdf, content_type='application/pdf')
+    #         # filename = f"Prescription_{patient_details.name}.pdf"
+    #         # content = f"inline; filename={filename}"
+    #         # download = request.GET.get("download")
+    #         # if download:
+    #         #     content = f"attachment; filename={filename}"
+    #         # response['Content-Disposition'] = content
+    #         return response
+    # return HttpResponse("PDF Not Found")
 
 class HistoryFormUpdateView(UpdateView):
     model = HistoryForm

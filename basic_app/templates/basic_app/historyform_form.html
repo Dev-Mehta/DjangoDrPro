@@ -15,7 +15,38 @@
   {% endblock %}
 {% block extra_javascript %}
 <script type="text/javascript">
+
   $(document).ready(function() {
+    // $('#id_chief_complaints').select2();
+
+//     var $select2 = $('#id_chief_complaints').select2(); // getting the select2
+// var item = 'xyz'; // item to be added
+// $select2.val(function(i, val) { // val can take function as parameter
+//   val = val || []; // if value is null init val as an array
+//   val.push(item); // add the new item
+//   return val;
+// }).trigger("change");
+//
+// $('#id_chief_complaints').select2({
+//         tags: true,
+//         tokenSeparators: [',', ' '],
+//         createTag: function (params) {
+//                 var term = $.trim(params.term);
+//
+//                 val = val || []; // if value is null init val as an array
+//                 val.push(term); // add the new item
+//                 return val;
+//               }.val(function(i, val) { // val can take function as parameter
+//                 val = val || []; // if value is null init val as an array
+//                 val.push(item); // add the new item
+//                 return val;
+//               }).trigger("change");
+//     });
+
+
+
+
+
     $('#id_chief_complaints').select2();
     $('#id_past_history').select2();
     $('#id_treatment_history').select2();
@@ -23,5 +54,9 @@
     $('#id_obsteric_histroy').select2();
   });
 </script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   {{ form.media.js }} -->
+
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 {% endblock extra_javascript %}

@@ -36,8 +36,8 @@ class PreviousReportForm(forms.ModelForm):
 		exclude = ['patient','created_at']
 
 class TetanusImmunisationCreateForm(forms.ModelForm):
-	date_tt1 = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'datepicker'}))
-	date_tt2 = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'datepicker'}))
+	# date_tt1 = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'datepicker'}))
+	# date_tt2 = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'datepicker'}))
 	class Meta:
 		model = TetanusImmunisation
 		exclude = ['patient']
@@ -57,16 +57,16 @@ class DischargeSummaryCreateForm(forms.ModelForm):
 	class Meta:
 		model = DischargeSummary
 		# exclude = ['patient','created_at']
-		fields = ['husband_name','diagnosis','procedure','per_op','baby_details','hospital_stay','advice_on_discharge',
+		fields = ['husband_name','doa','dod','diagnosis','procedure','per_op','baby_details','hospital_stay','advice_on_discharge',
 					'precaution','follow_up','comment']
 
 
 class DrugDosageTimeForm(forms.ModelForm):
 	class Meta:
 		model = DrugDosageTime
-		exclude = ['patient','created_at',]
+		exclude = ['patient','prescription','created_at']
 
 class DrugDosageTimeDischargeForm(forms.ModelForm):
 	class Meta:
 		model = DrugDosageTimeDischarge
-		exclude = ['patient','created_at',]
+		exclude = ['patient','discharge_summary','created_at']

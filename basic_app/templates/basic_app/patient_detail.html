@@ -78,23 +78,40 @@
     	{% for r in previous_reports %}
       <tbody>
     		<tr>
-    			<td>{{r.hb}}</td>
-    			<td>{{r.platelet}}</td>
-          <td>{{r.bt}}</td>
-          <td>{{r.ct}}</td>
-          <td>{{r.bs_f}}</td>
-          <td>{{r.bs_pp}}</td>
-          <td>{{r.ur_m}}</td>
-          <td>{{r.s_tsh}}</td>
-          <td>{{r.usg}}</td>
-          <td>{{r.mri_ct_scan}}</td>
-          <td>{{r.ecg}}</td>
-          <td>{{r.chest_x_ray}}</td>
-          <td>{{r.blood_group}}</td>
-          <td>{{r.hcv}}</td>
-          <td>{{r.hbs_ag}}</td>
-          <td>{{r.hiv}}</td>
-          <td>{{r.vdrl}}</td>
+          <td>{{r.hb}}&#44;
+          <br>{{r.hb_date}}</td>
+    			<td>{{r.platelet}}&#44;
+          <br>{{r.platelet_date}}</td>
+          <td>{{r.bt}}&#44;
+          <br>{{r.bt_date}}</td>
+          <td>{{r.ct}}&#44;
+          <br>{{r.ct_date}}</td>
+          <td>{{r.bs_f}}&#44;
+          <br>{{r.bs_f_date}}</td>
+          <td>{{r.bs_pp}}&#44;
+          <br>{{r.bs_pp_date}}</td>
+          <td>{{r.ur_m}}&#44;
+          <br>{{r.ur_m_date}}</td>
+          <td>{{r.s_tsh}}&#44;
+          <br>{{r.s_tsh_date}}</td>
+          <td>{{r.usg}}&#44;
+          <br>{{r.usg_date}}</td>
+          <td>{{r.mri_ct_scan}}&#44;
+          <br>{{r.mri_ct_scan_date}}</td>
+          <td>{{r.ecg}}&#44;
+          <br>{{r.ecg_date}}</td>
+          <td>{{r.chest_x_ray}}&#44;
+          <br>{{r.chest_x_ray_date}}</td>
+          <td>{{r.blood_group}}&#44;
+          <br>{{r.blood_group_date}}</td>
+          <td>{{r.hcv}}&#44;
+          <br>{{r.hcv_date}}</td>
+          <td>{{r.hbs_ag}}&#44;
+          <br>{{r.hbs_ag_date}}</td>
+          <td>{{r.hiv}}&#44;
+          <br>{{r.hiv_date}}</td>
+          <td>{{r.vdrl}}&#44;
+          <br>{{r.vdrl_date}}</td>
     			<td><small>{{r.created_at}}</small></td>
     		</tr>
         </tbody>
@@ -117,8 +134,17 @@
 
 
       <h3>Tetanus Immunisation</h3>
-      <strong>TT1 Date: </strong>{{tetanus_immunisation.date_tt1}}
-      <br><strong>TT2 Date: </strong>{{tetanus_immunisation.date_tt2}}
+      {% if tetanus_immunisation.date_tt1 is None %}
+        <strong>TT1 Date: </strong>
+      {% else %}
+        <strong>TT1 Date: </strong>{{tetanus_immunisation.date_tt1}}
+      {% endif %}
+      {% if tetanus_immunisation.date_tt2 is None %}
+        <br><strong>TT2 Date: </strong>
+      {% else %}
+        <br><strong>TT2 Date: </strong>{{tetanus_immunisation.date_tt2}}
+      {% endif %}
+
           {% ifequal tit_exist "true"%}
           <p>
             <a class='btn btn-dark' href="/patient/{{ patient_details.patient_id}}/update_tetanus_immunisation/">Update Tetanus </a>
@@ -130,8 +156,8 @@
           {% endifequal %}
 
 <!-- Physical Examination -->
-    </br>
-      </br>
+    <br>
+      <br>
       <h3>Physical Examination:</h3>
       <div class="table-responsive-sm">
       	<table class="table table-bordered">
@@ -143,7 +169,7 @@
           <th>Ht.</th>
           <th>Uterus Funal Ht.</th>
           <th>Presentation</th>
-          <th>FMS</th>
+          <th>FHS</th>
           <th>Per Vaginum</th>
     			<th>Created On</th>
         </tr>
@@ -157,7 +183,7 @@
           <td>{{r.ht}}</td>
           <td>{{r.uterus_funal_ht}}</td>
           <td>{{r.presentation}}</td>
-          <td>{{r.fms}}</td>
+          <td>{{r.fhs}}</td>
           <td>{{r.per_vaginum}}</td>
     			<td><small>{{r.created_at}}</small></td>
         </tr>
@@ -292,11 +318,18 @@
             </div>
             <div class="modal-body">
               <span>&nbsp;</span>
-            <form class="form-group" method="POST">
-              {{form|crispy}}
-              {% csrf_token %}
-            </form>
-            <button id="form-submit" class="btn btn-primary">Submit</button>
+
+              <form method="POST">
+            		{% csrf_token %}
+                <div class="form-row">
+                  {% for field in form  %}
+                  <div class="form-group col-md-6 mb-0">
+                        {{ field|as_crispy_field  }}
+                      </div>
+                  {% endfor %}
+                </div>
+           		</form>
+              <button id="form-submit" class="btn btn-primary" type="submit">Submit</button>
             </div>
           </div>
         </div>
@@ -328,26 +361,159 @@
   </div>
   {% endblock postpatient %}
   {% block extra_javascript %}
+  <head>
+  <!-- jQuery -->
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+   <!-- Fengyuan Chen's Datepicker -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+  </head>
+<body>
+
+
   <script type="text/javascript">
+    $( function() {
+      $( "#id_hb_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_platelet_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_bt_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_ct_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_bs_f_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_bs_pp_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_ur_m_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_s_tsh_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_usg_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_mri_ct_scan_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_ecg_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_chest_x_ray_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_blood_group_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_hcv_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_hbs_ag_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_hiv_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+      $( "#id_vdrl_date" ).datepicker({
+        autoHide: true,
+        zIndex: 2048,
+        format: 'YYYY-MM-DD',
+        date: null,
+      });
+    } );
+
     var btn = document.querySelector('#form-submit');
     btn.onclick = function(){
     var hb = document.querySelector('#id_hb');
+    var hb_date = document.querySelector('#id_hb_date');
     var platelet = document.querySelector('#id_platelet');
+    var platelet_date = document.querySelector('#id_platelet_date');
     var bt = document.querySelector('#id_bt');
+    var bt_date = document.querySelector('#id_bt_date');
     var ct = document.querySelector('#id_ct');
+    var ct_date = document.querySelector('#id_ct_date');
     var bs_f = document.querySelector('#id_bs_f');
+    var bs_f_date = document.querySelector('#id_bs_f_date');
     var bs_pp = document.querySelector('#id_bs_pp');
+    var bs_pp_date = document.querySelector('#id_bs_pp_date');
     var ur_m = document.querySelector('#id_ur_m');
+    var ur_m_date = document.querySelector('#id_ur_m_date');
     var s_tsh = document.querySelector('#id_s_tsh');
+    var s_tsh_date = document.querySelector('#id_s_tsh_date');
     var usg = document.querySelector('#id_usg');
+    var usg_date = document.querySelector('#id_usg_date');
     var mri_ct_scan = document.querySelector('#id_mri_ct_scan');
+    var mri_ct_scan_date = document.querySelector('#id_mri_ct_scan_date');
     var ecg = document.querySelector('#id_ecg');
+    var ecg_date = document.querySelector('#id_ecg_date');
     var chest_x_ray = document.querySelector('#id_chest_x_ray');
+    var chest_x_ray_date = document.querySelector('#id_chest_x_ray_date');
     var blood_group = document.querySelector('#id_blood_group');
+    var blood_group_date = document.querySelector('#id_blood_group_date');
     var hcv = document.querySelector('#id_hcv');
+    var hcv_date = document.querySelector('#id_hcv_date');
     var hbs_ag = document.querySelector('#id_hbs_ag');
+    var hbs_ag_date = document.querySelector('#id_hbs_ag_date');
     var hiv = document.querySelector('#id_hiv');
+    var hiv_date = document.querySelector('#id_hiv_date');
     var vdrl = document.querySelector('#id_vdrl');
+    var vdrl_date = document.querySelector('#id_vdrl_date');
     // if(hb.value === ""){
     //   alert("Fill HB Value");
     // }
@@ -363,22 +529,20 @@
       };
       xhttp.open("POST", "/patient/{{patient_details.patient_id}}", true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhttp.send(`hb=${hb.value}&platelet=${platelet.value}&bt=${bt.value}&ct=${ct.value}&bs_f=${bs_f.value}&bs_pp=${bs_pp.value}
-      &ur_m=${ur_m.value}&s_tsh=${s_tsh.value}&usg=${usg.value}&mri_ct_scan=${mri_ct_scan.value}&ecg=${ecg.value}
-      &chest_x_ray=${chest_x_ray.value}&blood_group=${blood_group.value}&hcv=${hcv.value}&hbs_ag=${hbs_ag.value}&hiv=${hiv.value}&vdrl=${vdrl.value}`);
+      xhttp.send(`hb=${hb.value}&hb_date=${hb_date.value}&platelet=${platelet.value}&platelet_date=${platelet_date.value}&bt=${bt.value}&bt_date=${bt_date.value}&ct=${ct.value}&ct_date=${ct_date.value}&bs_f=${bs_f.value}&bs_f_date=${bs_f_date.value}&bs_pp=${bs_pp.value}&bs_pp_date=${bs_pp_date.value}&ur_m=${ur_m.value}&ur_m_date=${ur_m_date.value}&s_tsh=${s_tsh.value}&s_tsh_date=${s_tsh_date.value}&usg=${usg.value}&usg_date=${usg_date.value}&mri_ct_scan=${mri_ct_scan.value}&mri_ct_scan_date=${mri_ct_scan_date.value}&ecg=${ecg.value}&ecg_date=${ecg_date.value}&chest_x_ray=${chest_x_ray.value}&chest_x_ray_date=${chest_x_ray_date.value}&blood_group=${blood_group.value}&blood_group_date=${blood_group_date.value}&hcv=${hcv.value}&hcv_date=${hcv_date.value}&hbs_ag=${hbs_ag.value}&hbs_ag_date=${hbs_ag_date.value}&hiv=${hiv.value}&hiv_date=${hiv_date.value}&vdrl=${vdrl.value}&vdrl_date=${vdrl_date.value}`);
   }
 
 
-  var btn_phy = document.querySelector('#form-submit-physical');
-  var btn_id = btn_phy.id
-  btn_phy.onclick = function(){
+    var btn_phy = document.querySelector('#form-submit-physical');
+    var btn_id = btn_phy.id
+    btn_phy.onclick = function(){
   var pr = document.querySelector('#id_pr');
   var bp = document.querySelector('#id_bp');
   var wt = document.querySelector('#id_wt');
   var ht = document.querySelector('#id_ht');
   var uterus_funal_ht = document.querySelector('#id_uterus_funal_ht');
   var presentation = document.querySelector('#id_presentation');
-  var fms = document.querySelector('#id_fms');
+  var fhs = document.querySelector('#id_fhs');
   var per_vaginum = document.querySelector('#id_per_vaginum');
 
   // if(hb.value === ""){
@@ -397,10 +561,11 @@
     xhttp.open("POST", "/patient/{{patient_details.patient_id}}", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(`pr=${pr.value}&bp=${bp.value}&wt=${wt.value}&ht=${ht.value}&uterus_funal_ht=${uterus_funal_ht.value}&presentation=${presentation.value}
-    &fms=${fms.value}&per_vaginum=${per_vaginum.value}&btn_id=${btn_id}`);
+    &fhs=${fhs.value}&per_vaginum=${per_vaginum.value}&btn_id=${btn_id}`);
   // }
   }
 
 
   </script>
+  </body>
   {% endblock extra_javascript %}

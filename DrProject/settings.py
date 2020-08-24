@@ -116,6 +116,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     },
+#     "select2": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/2",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -124,6 +138,8 @@ USE_TZ = True
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_URL = '/static/'
+
+# SELECT2_CACHE_BACKEND = "select2"
 
 # DBBACKUP_STORAGE = 'dbbackup.storage.FileSystemStorage'
 # DBBACKUP_FILESYSTEM_DIRECTORY = 'F:\TanuDiDbBbackup'
