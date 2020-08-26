@@ -695,6 +695,10 @@ class HistoryFormUpdateView(UpdateView):
 #             return redirect(f'/patient/{p_id}/create_history')
 #         else:
 #             return super(HistoryFormUpdateView,self).get(request,*args,**kwargs)
+
+    def get_object(self,*args,**kwargs):
+        obj = self.model.objects.get(patient_id=self.kwargs['pk'])
+        return obj
     
     def get_success_url(self):
             return reverse('basic_app:detail', kwargs={'pk': self.object.id})
