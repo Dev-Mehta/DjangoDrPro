@@ -687,7 +687,15 @@ class HistoryFormUpdateView(UpdateView):
     template_name = 'basic_app/historyform_form.html'
 
     fields = ["chief_complaints","past_history","treatment_history","menstrual","obsteric_histroy","g","p","a","l"]
-
+    
+#     def get(self,request,*args,**kwargs):
+#         hf = HistoryForm.objects.filter(patient_id=self.kwargs['pk'])
+#         if not hf.exists():
+#             p_id = self.kwargs['pk']
+#             return redirect(f'/patient/{p_id}/create_history')
+#         else:
+#             return super(HistoryFormUpdateView,self).get(request,*args,**kwargs)
+    
     def get_success_url(self):
             return reverse('basic_app:detail', kwargs={'pk': self.object.id})
 
